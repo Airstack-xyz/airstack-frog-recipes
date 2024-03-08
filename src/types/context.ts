@@ -24,6 +24,19 @@ export type Context<
    */
   buttonValue?: string | undefined
   /**
+   * `.env` can get bindings (environment variables, secrets, KV namespaces, D1 database, R2 bucket etc.) in Cloudflare Workers.
+   *
+   * @example
+   * ```ts
+   * // Environment object for Cloudflare Workers
+   * app.frame('/', async c => {
+   *   const counter = c.env.COUNTER
+   * })
+   * ```
+   * @see https://hono.dev/api/context#env
+   */
+  env: Context_hono<env, path>['env']
+  /**
    * Data from the frame that was passed via the POST body.
    * The {@link Context`verified`} flag indicates whether the data is trusted or not.
    */
@@ -80,6 +93,8 @@ export type FrameContext<
   _state = env['State'],
 > = Context<env, path, _state> & {
   /**
+   * @deprecated As of `v0.5.0`, this property is redundant (there is now only one render cycle) and will be removed in a future version.
+   *
    * Current render cycle of the frame.
    *
    * - `main` - Render cycle for the main frame route.
@@ -102,16 +117,6 @@ export type FrameContext<
    * - Ethereum: a transaction hash
    */
   transactionId?: FrameData['transactionId'] | undefined
-}
-
-export type FrameQueryContext<
-  env extends Env = Env,
-  path extends string = string,
-  //
-  _state = env['State'],
-> = Omit<FrameContext<env, path, _state>, 'req'> & {
-  req: undefined
-  state: _state
 }
 
 export type TransactionContext<

@@ -74,8 +74,8 @@ export default defineConfig({
       link: 'https://github.com/wevm/frog',
     },
     {
-      icon: 'x',
-      link: 'https://twitter.com/wevm_dev',
+      icon: 'warpcast',
+      link: 'https://warpcast.com/wevm',
     },
   ],
   sponsors: [
@@ -252,10 +252,6 @@ export default defineConfig({
       link: '/getting-started',
     },
     {
-      text: 'FAQ',
-      link: '/faq',
-    },
-    {
       text: 'Concepts',
       items: [
         {
@@ -269,10 +265,6 @@ export default defineConfig({
         {
           text: 'Images & Intents',
           link: '/concepts/images-intents',
-        },
-        {
-          text: 'Render Cycles',
-          link: '/concepts/render-cycles',
         },
         {
           text: 'Connecting Frames (Actions)',

@@ -86,7 +86,7 @@ export type FrameResponse = {
    * @example
    * { width: 1200, height: 630 }
    */
-  imageOptions?: ImageResponseOptions | undefined
+  imageOptions?: Omit<ImageResponseOptions, 'fonts'> | undefined
   /**
    * A set of intents (ie. buttons, text inputs, etc) to render for the frame
    * (beneath the OG image).

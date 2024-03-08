@@ -1,5 +1,106 @@
 # frog
 
+## 0.5.5
+
+### Patch Changes
+
+- [`808be3d`](https://github.com/wevm/frog/commit/808be3d68f214927c0e4a02e1c9e3a55e2bcf5b6) Thanks [@jxom](https://github.com/jxom)! - Fixed type.
+
+## 0.5.4
+
+### Patch Changes
+
+- [`d0ce9cc`](https://github.com/wevm/frog/commit/d0ce9cc81cdccb0734c7348a7caec4adb4c5ce60) Thanks [@jxom](https://github.com/jxom)! - Fixed `imageOptions` propagation when passed to `Frog`.
+
+## 0.5.3
+
+### Patch Changes
+
+- [`a18f5e5`](https://github.com/wevm/frog/commit/a18f5e507dcd90566a9f1de05ae91dc4e6aa9462) Thanks [@jxom](https://github.com/jxom)! - Added `transactionId` to `messageToFrameData`.
+
+## 0.5.2
+
+### Patch Changes
+
+- [`3b2d353`](https://github.com/wevm/frog/commit/3b2d3533098a5c2d54bd9584feed0fd7a50000f7) Thanks [@jxom](https://github.com/jxom)! - Unwrap JSX elements before passing them as parameters.
+
+## 0.5.1
+
+### Patch Changes
+
+- [`51610c2`](https://github.com/wevm/frog/commit/51610c2614597e29088b6a1618f5cdf7e79db19b) Thanks [@jxom](https://github.com/jxom)! - Added `action` prop to `Button.Transaction`.
+
+## 0.5.0
+
+### Minor Changes
+
+- [#109](https://github.com/wevm/frog/pull/109) [`e5296d8`](https://github.com/wevm/frog/commit/e5296d8be88efba603aa7b56290a2063fcf27154) Thanks [@jxom](https://github.com/jxom)! - This version of Frog removes the concept of "Render Cycles". All frames now facilitate a single cycle.
+
+  There are a couple of small **deprecations**:
+
+  1. Deprecated `cycle` from context – you can now omit the conditionals completely.
+
+  ```diff
+  app.frame('/', c => {
+  -  if (c.cycle === 'main') console.log('hello world')
+  +  console.log('hello world')
+  })
+  ```
+
+  2. Deprecated `fonts` property in `c.res` in favor of `fonts` on frame route options:
+
+  ```diff
+  app.frame('/', c => {
+    return c.res({
+      imageOptions: {
+  -     fonts: // ...
+      }
+    })
+  }, {
+  +  fonts: // ...
+  })
+  ```
+
+## 0.4.8
+
+### Patch Changes
+
+- [`12bff46`](https://github.com/wevm/frog/commit/12bff468a37ffd622aae74791205b76f5f94dba7) Thanks [@jxom](https://github.com/jxom)! - Fixed Base chain ID.
+
+## 0.4.7
+
+### Patch Changes
+
+- [`efe1f6a`](https://github.com/wevm/frog/commit/efe1f6a9b9d809cbc9ec714676189e5c87bb3062) Thanks [@jxom](https://github.com/jxom)! - Strengthened `chainId` type for transactions.
+
+## 0.4.6
+
+### Patch Changes
+
+- [`9d2bf3f`](https://github.com/wevm/frog/commit/9d2bf3fd06bb78bc00d7b09bcaea71043418ee60) Thanks [@jxom](https://github.com/jxom)! - Updated `hono-og`.
+
+## 0.4.5
+
+### Patch Changes
+
+- [`f150fe9`](https://github.com/wevm/frog/commit/f150fe98dd999c35aa8dc9769bcce9d5f2721c46) Thanks [@jxom](https://github.com/jxom)! - Updated `hono-og`.
+
+## 0.4.4
+
+### Patch Changes
+
+- [`2f7c148`](https://github.com/wevm/frog/commit/2f7c148bea730624596b84e7f091c6400a336298) Thanks [@jxom](https://github.com/jxom)! - Fixed `HandlerResponse` type.
+
+## 0.4.3
+
+### Patch Changes
+
+- [`0d379e4`](https://github.com/wevm/frog/commit/0d379e48548ce72bd43501bd4bfb93eef4ec01a6) Thanks [@tmm](https://github.com/tmm)! - Added transaction buttons
+
+- [#95](https://github.com/wevm/frog/pull/95) [`84caa33`](https://github.com/wevm/frog/commit/84caa337b700cc22ac0e3ddf468631e7d679e545) Thanks [@dalechyn](https://github.com/dalechyn)! - Fixed typing of `c.req.param()` in `.transaction` route.
+
+- [`3683778`](https://github.com/wevm/frog/commit/3683778151bf1179a1bf674108986e024da7287c) Thanks [@jxom](https://github.com/jxom)! - Added support for [Hono's `.env`](https://hono.dev/api/context#env).
+
 ## 0.4.2
 
 ### Patch Changes
