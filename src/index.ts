@@ -32,3 +32,4 @@ export type {
   SendTransactionParameters,
   TransactionParameters,
 } from './types/transaction.js'
+export * from "@airstack/frames";

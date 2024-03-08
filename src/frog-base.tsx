@@ -29,13 +29,17 @@ import { requestQueryToContext } from './utils/requestQueryToContext.js'
 import { serializeJson } from './utils/serializeJson.js'
 import { toSearchParams } from './utils/toSearchParams.js'
 import { version } from './version.js'
+import { airstack } from './hubs/airstack.js'
 
 export type FrogConstructorParameters<
   env extends Env = Env,
   basePath extends string = '/',
-  //
   _state = env['State'],
 > = Pick<FrameResponse, 'browserLocation'> & {
+  /**
+   * Airstack API key. Get your Airstack API key at https://app.airstack.xyz
+   */
+  apiKey: string
   /**
    * The base path for assets.
    *
@@ -191,7 +195,8 @@ export class FrogBase<
   // Note: not using native `private` fields to avoid tslib being injected
   // into bundled code.
   _initialState: env['State'] = undefined as env['State']
-
+  /** Airstack API key */
+  apiKey!: string
   /** Path for assets. */
   assetsPath: string
   /** Base path of the server instance. */
@@ -225,6 +230,7 @@ export class FrogBase<
   transaction = transaction as typeof transaction<env, schema, basePath, _state>
 
   constructor({
+    apiKey,
     assetsPath,
     basePath,
     browserLocation,
@@ -238,14 +244,16 @@ export class FrogBase<
     initialState,
     secret,
     verify,
-  }: FrogConstructorParameters<env, basePath, _state> = {}) {
+  }: FrogConstructorParameters<env, basePath, _state> = { apiKey: '' }) {
     this.hono = new Hono<env, schema, basePath>(honoOptions)
+    this.hub = hub ?? airstack({
+      apiKey: apiKey as string
+    })
     if (basePath) this.hono = this.hono.basePath(basePath)
     if (browserLocation) this.browserLocation = browserLocation
     if (headers) this.headers = headers
     if (dev) this.dev = { enabled: true, ...(dev ?? {}) }
     if (hubApiUrl) this.hubApiUrl = hubApiUrl
-    if (hub) this.hub = hub
     if (imageAspectRatio) this.imageAspectRatio = imageAspectRatio
     if (imageOptions) this.imageOptions = imageOptions
     if (secret) this.secret = secret

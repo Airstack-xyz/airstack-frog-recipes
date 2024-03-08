@@ -62,6 +62,7 @@
     }
   },
   "dependencies": {
+    "@airstack/frames": "^1.0.9",
     "@bufbuild/protobuf": "^1.7.2",
     "@farcaster/core": "^0.13.7",
     "@hono/vite-dev-server": "0.7.0",
