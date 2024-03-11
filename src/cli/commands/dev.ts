@@ -1,7 +1,7 @@
 import { execSync, spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
-import devServer from '@hono/vite-dev-server'
+import devServer, { defaultOptions } from '@hono/vite-dev-server'
 import pc from 'picocolors'
 import { createLogger, createServer, loadEnv } from 'vite'
 
@@ -35,10 +35,11 @@ export async function dev(
     publicDir: staticDir ?? 'public',
     plugins: [
       devServer({
+        entry: entry_resolved,
         exclude: [
+          ...defaultOptions.exclude,
           /.+\.(gif|jpe?g|tiff?|png|webp|bmp|woff|eot|woff2|ttf|otf|ico|txt)$/,
         ],
-        entry: entry_resolved,
         // Note: we are not relying on the default export so we can be compatible with
         // runtimes that rely on it (ie. Vercel Serverless Functions).
         export: 'app',
