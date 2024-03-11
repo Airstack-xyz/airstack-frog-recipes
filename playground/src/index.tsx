@@ -1,6 +1,4 @@
 import { Button, Frog, TextInput } from 'frog'
-import * as hubs from 'frog/hubs'
-
 import { app as middlewareApp } from './middleware.js'
 import { app as neynarApp } from './neynar.js'
 import { app as routingApp } from './routing.js'
@@ -9,8 +7,8 @@ import { app as transactionApp } from './transaction.js'
 
 export const app = new Frog({
   browserLocation: '/:path/dev',
-  hub: hubs.frog(),
   verify: 'silent',
+  apiKey: process.env.AIRSTACK_API_KEY as string, // Replace 'YOUR_API_KEY_HERE' with your actual API key
 })
 
 app.frame('/', (c) => {

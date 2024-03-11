@@ -86,7 +86,7 @@ importers:
 
   playground:
     dependencies:
-      frog:
+      '@airstack/frog':
         specifier: workspace:*
         version: link:../src
       hono:
@@ -165,8 +165,8 @@ importers:
   src:
     dependencies:
       '@airstack/frames':
-        specifier: ^1.0.9
-        version: 1.0.9(typescript@5.3.3)
+        specifier: ^1.0.10
+        version: 1.0.10(typescript@5.3.3)
       '@bufbuild/protobuf':
         specifier: ^1.7.2
         version: 1.7.2
@@ -348,8 +348,8 @@ packages:
     resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
     dev: false
 
-  /@airstack/frames@1.0.9(typescript@5.3.3):
-    resolution: {integrity: sha512-6mL4/V3oLGA6TTuPnyIjF5rgAYie8kLJlrGsMp0OxlvTrUFXPZZysbLOq2mjX10BFVSNad0e+TJPQ6+2MQa33g==}
+  /@airstack/frames@1.0.10(typescript@5.3.3):
+    resolution: {integrity: sha512-tpXFC6/b9/xU93TkhZQh2kqiGX1tQdO7EFtaDeGIaBlZfUx41uIp0eV6MGZ1IFcEUnYGuVGMcj3hP+0ZlgYnSg==}
     dependencies:
       '@airstack/node': 0.0.5
       '@farcaster/core': 0.14.6(typescript@5.3.3)
