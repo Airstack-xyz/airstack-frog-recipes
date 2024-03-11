@@ -17,11 +17,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "paths": {
-      "@airstack/frog": ["../src/index.ts"],
-      "@airstack/frog/*": ["../src/*"]
-    }
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["**/*.ts", "**/*.tsx"]
 }

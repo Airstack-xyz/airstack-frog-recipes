@@ -34,7 +34,6 @@
     "lib": ["ES2022", "DOM"],
     "types": ["@types/node", "typed-htmx"],
     // Skip type checking for node modules
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": true
+    "skipLibCheck": true
   }
 }
