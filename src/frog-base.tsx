@@ -11,6 +11,7 @@ import { default as p } from 'path-browserify'
 
 import { init } from '@airstack/frames'
 import { config } from './config.ts'
+import { airstack } from './hubs/airstack.ts'
 import type { FrameContext, TransactionContext } from './types/context.js'
 import type { Env } from './types/env.js'
 import {
