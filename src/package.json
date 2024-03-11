@@ -87,12 +87,6 @@
   "authors": [
     "YosephKS"
   ],
-  "funding": [
-    {
-      "type": "github",
-      "url": "https://github.com/sponsors/wevm"
-    }
-  ],
   "keywords": [
     "eth",
     "ethereum",
@@ -102,5 +96,8 @@
     "farcaster",
     "frame",
     "frames"
-  ]
+  ],
+  "devDependencies": {
+    "@types/react": "18.2.25"
+  }
 }
