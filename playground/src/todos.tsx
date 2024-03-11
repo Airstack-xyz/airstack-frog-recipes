@@ -6,6 +6,7 @@ export const app = new Frog<{
     todos: { completed: boolean; name: string }[]
   }
 }>({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   initialState: {
     index: -1,
     todos: [],
