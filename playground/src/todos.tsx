@@ -15,7 +15,7 @@ export const app = new Frog<{
 app.frame('/', (c: any) => {
   const { buttonValue, deriveState, inputText } = c
 
-  const { index, todos } = deriveState((state) => {
+  const { index, todos } = deriveState((state: any) => {
     if (inputText) {
       state.todos.push({ completed: false, name: inputText })
     }
@@ -33,7 +33,7 @@ app.frame('/', (c: any) => {
     image: (
       <div tw="flex flex-col w-full h-full p-10 bg-black">
         <div tw="text-white text-6xl">TODO List</div>
-        {todos.map((todo, i) => (
+        {todos.map((todo: any, i: any) => (
           <div tw="text-white flex text-4xl mt-5">
             {todo.completed ? '✅' : '◻️'} {todo.name} {i === index ? '👈' : ''}
           </div>

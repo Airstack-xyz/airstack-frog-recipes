@@ -6,7 +6,7 @@
     "dev": "node --import tsx ../src/cli/index.ts"
   },
   "dependencies": {
-    "@airstack/frog": "workspace:../src",
+    "@airstack/frog": "workspace:@airstack/frog@*",
     "hono": "^4"
   },
   "devDependencies": {
