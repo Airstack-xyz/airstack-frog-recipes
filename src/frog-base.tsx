@@ -9,6 +9,8 @@ import lz from 'lz-string'
 // We are not using `node:path` to remain compatible with Edge runtimes.
 import { default as p } from 'path-browserify'
 
+import { init } from '@airstack/frames'
+import { config } from './config.ts'
 import { airstack } from './hubs/airstack.js'
 import type { FrameContext, TransactionContext } from './types/context.js'
 import type { Env } from './types/env.js'
@@ -32,7 +34,6 @@ import { parsePath } from './utils/parsePath.js'
 import { requestBodyToContext } from './utils/requestBodyToContext.js'
 import { serializeJson } from './utils/serializeJson.js'
 import { toSearchParams } from './utils/toSearchParams.js'
-import { version } from './version.js'
 
 export type FrogConstructorParameters<
   env extends Env = Env,
@@ -276,6 +277,9 @@ export class FrogBase<
     this.use = this.hono.use.bind(this.hono)
 
     if (initialState) this._initialState = initialState
+
+    init(apiKey)
+    config.authKey = apiKey
   }
 
   frame<path extends string>(

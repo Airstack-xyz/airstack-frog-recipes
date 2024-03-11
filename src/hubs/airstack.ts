@@ -1,3 +1,4 @@
+import { config } from '../config.ts'
 import { createHub } from './utils.js'
 
 export type AirstackHubParameters = {
@@ -10,7 +11,7 @@ export const airstack = createHub((parameters: AirstackHubParameters) => {
     apiUrl: 'https://hubs.airstack.xyz',
     fetchOptions: {
       headers: {
-        'x-airstack-hubs': apiKey,
+        'x-airstack-hubs': apiKey ? apiKey : config.authKey,
       },
     },
   }

@@ -84,9 +84,7 @@
   "license": "MIT",
   "homepage": "https://airstack.xyz",
   "repository": "airstack-xyz/airstack-frog-recipes",
-  "authors": [
-    "YosephKS"
-  ],
+  "authors": ["YosephKS"],
   "keywords": [
     "eth",
     "ethereum",
@@ -96,8 +94,5 @@
     "farcaster",
     "frame",
     "frames"
-  ],
-  "devDependencies": {
-    "@types/react": "18.2.25"
-  }
+  ]
 }
