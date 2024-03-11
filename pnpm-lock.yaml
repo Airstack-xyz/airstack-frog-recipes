@@ -87,7 +87,7 @@ importers:
   playground:
     dependencies:
       '@airstack/frog':
-        specifier: workspace:*
+        specifier: workspace:../src
         version: link:../src
       hono:
         specifier: ^4
