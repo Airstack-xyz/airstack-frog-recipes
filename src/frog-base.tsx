@@ -11,7 +11,6 @@ import { default as p } from 'path-browserify'
 
 import { init } from '@airstack/frames'
 import { config } from './config.ts'
-import { airstack } from './hubs/airstack.js'
 import type { FrameContext, TransactionContext } from './types/context.js'
 import type { Env } from './types/env.js'
 import {
@@ -34,6 +33,7 @@ import { parsePath } from './utils/parsePath.js'
 import { requestBodyToContext } from './utils/requestBodyToContext.js'
 import { serializeJson } from './utils/serializeJson.js'
 import { toSearchParams } from './utils/toSearchParams.js'
+import { version } from './version.ts'
 
 export type FrogConstructorParameters<
   env extends Env = Env,
