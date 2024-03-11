@@ -16,7 +16,7 @@ import { type Pretty } from './types/utils.js'
  *
  * @example
  * ```
- * import { Frog } from 'frog'
+ * import { Frog } from '@airstack/frog'
  *
  * const app = new Frog()
  *
