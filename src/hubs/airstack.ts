@@ -1,4 +1,4 @@
-import { config } from '../config.ts'
+import { config } from '../config.js'
 import { createHub } from './utils.js'
 
 export type AirstackHubParameters = {
