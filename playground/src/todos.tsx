@@ -1,4 +1,4 @@
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 
 export const app = new Frog<{
   State: {
@@ -12,7 +12,7 @@ export const app = new Frog<{
   },
 })
 
-app.frame('/', (c) => {
+app.frame('/', (c: any) => {
   const { buttonValue, deriveState, inputText } = c
 
   const { index, todos } = deriveState((state) => {
@@ -50,7 +50,7 @@ app.frame('/', (c) => {
   })
 })
 
-app.frame('/foo', (c) => {
+app.frame('/foo', (c: any) => {
   return c.res({
     image: (
       <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>

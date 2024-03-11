@@ -1,4 +1,4 @@
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 import { app as middlewareApp } from './middleware.js'
 import { app as neynarApp } from './neynar.js'
 import { app as routingApp } from './routing.js'
@@ -11,7 +11,7 @@ export const app = new Frog({
   apiKey: process.env.AIRSTACK_API_KEY as string, // Replace 'YOUR_API_KEY_HERE' with your actual API key
 })
 
-app.frame('/', (c) => {
+app.frame('/', (c: any) => {
   const { buttonValue, inputText, status } = c
   const fruit = inputText || buttonValue
   return c.res({
@@ -62,7 +62,7 @@ app.frame('/', (c) => {
   })
 })
 
-app.frame('/action', (c) => {
+app.frame('/action', (c: any) => {
   const { buttonValue, inputText } = c
   const fruit = inputText || buttonValue || ''
   return c.res({
@@ -92,7 +92,7 @@ app.frame('/action', (c) => {
   })
 })
 
-app.frame('/buttons', (c) => {
+app.frame('/buttons', (c: any) => {
   const { buttonValue } = c
   return c.res({
     image: (
@@ -121,7 +121,7 @@ app.frame('/buttons', (c) => {
   })
 })
 
-app.frame('/no-intents', (c) => {
+app.frame('/no-intents', (c: any) => {
   return c.res({
     image: (
       <div style={{ backgroundColor: 'green', width: '100%', height: '100%' }}>
@@ -132,7 +132,7 @@ app.frame('/no-intents', (c) => {
   })
 })
 
-app.frame('/falsy-intents', (c) => {
+app.frame('/falsy-intents', (c: any) => {
   return c.res({
     image: (
       <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
@@ -149,7 +149,7 @@ app.frame('/falsy-intents', (c) => {
   })
 })
 
-app.frame('/mint', (c) => {
+app.frame('/mint', (c: any) => {
   return c.res({
     image: 'https://basepaint.xyz/api/art/image?day=191',
     imageAspectRatio: '1:1',
@@ -161,7 +161,7 @@ app.frame('/mint', (c) => {
   })
 })
 
-app.frame('/button-action', (c) => {
+app.frame('/button-action', (c: any) => {
   const { buttonValue } = c
   return c.res({
     image: (
@@ -183,7 +183,7 @@ app.frame('/button-action', (c) => {
   })
 })
 
-app.frame('/button-action-2', (c) => {
+app.frame('/button-action-2', (c: any) => {
   const { buttonValue } = c
   return c.res({
     image: (
@@ -199,7 +199,7 @@ app.frame('/button-action-2', (c) => {
   })
 })
 
-app.frame('/image-only', (c) => {
+app.frame('/image-only', (c: any) => {
   return c.res({
     image: (
       <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
@@ -209,7 +209,7 @@ app.frame('/image-only', (c) => {
   })
 })
 
-app.frame('/redirect-buttons', (c) => {
+app.frame('/redirect-buttons', (c: any) => {
   return c.res({
     image: <div tw="flex">foo</div>,
     intents: [

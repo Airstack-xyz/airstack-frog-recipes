@@ -1,8 +1,8 @@
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 export const app = new Frog()
 
-app.frame('/:name', (c) => {
+app.frame('/:name', (c: any) => {
   const name = c.req.param('name')
   return c.res({
     image: (

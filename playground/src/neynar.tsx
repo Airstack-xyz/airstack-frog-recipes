@@ -1,5 +1,5 @@
-import { Button, Frog } from 'frog'
-import { type NeynarVariables, neynar } from 'frog/middlewares'
+import { Button, Frog } from '@airstack/frog'
+import { type NeynarVariables, neynar } from '@airstack/frog/middlewares'
 
 export const app = new Frog<{
   Variables: NeynarVariables
@@ -12,7 +12,7 @@ app.use(
   }),
 )
 
-app.frame('/', (c) => {
+app.frame('/', (c: any) => {
   return c.res({
     action: '/guess',
     image: (
@@ -34,7 +34,7 @@ app.frame('/', (c) => {
   })
 })
 
-app.frame('/guess', (c) => {
+app.frame('/guess', (c: any) => {
   const { displayName, followerCount } = c.var.interactor || {}
   console.log('interactor: ', c.var.interactor)
   console.log('cast: ', c.var.cast)
