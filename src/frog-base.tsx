@@ -9,6 +9,7 @@ import lz from 'lz-string'
 // We are not using `node:path` to remain compatible with Edge runtimes.
 import { default as p } from 'path-browserify'
 
+import { airstack } from './hubs/airstack.js'
 import type { FrameContext, TransactionContext } from './types/context.js'
 import type { Env } from './types/env.js'
 import {
@@ -32,7 +33,6 @@ import { requestBodyToContext } from './utils/requestBodyToContext.js'
 import { serializeJson } from './utils/serializeJson.js'
 import { toSearchParams } from './utils/toSearchParams.js'
 import { version } from './version.js'
-import { airstack } from './hubs/airstack.js'
 
 export type FrogConstructorParameters<
   env extends Env = Env,
@@ -234,26 +234,30 @@ export class FrogBase<
   /** Whether or not frames should be verified. */
   verify: FrogConstructorParameters['verify'] = true
 
-  constructor({
-    apiKey,
-    assetsPath,
-    basePath,
-    browserLocation,
-    dev,
-    headers,
-    honoOptions,
-    hubApiUrl,
-    hub,
-    imageAspectRatio,
-    imageOptions,
-    initialState,
-    secret,
-    verify,
-  }: FrogConstructorParameters<env, basePath, _state> = { apiKey: '' }) {
+  constructor(
+    {
+      apiKey,
+      assetsPath,
+      basePath,
+      browserLocation,
+      dev,
+      headers,
+      honoOptions,
+      hubApiUrl,
+      hub,
+      imageAspectRatio,
+      imageOptions,
+      initialState,
+      secret,
+      verify,
+    }: FrogConstructorParameters<env, basePath, _state> = { apiKey: '' },
+  ) {
     this.hono = new Hono<env, schema, basePath>(honoOptions)
-    this.hub = hub ?? airstack({
-      apiKey: apiKey as string
-    })
+    this.hub =
+      hub ??
+      airstack({
+        apiKey: apiKey as string,
+      })
     if (basePath) this.hono = this.hono.basePath(basePath)
     if (browserLocation) this.browserLocation = browserLocation
     if (headers) this.headers = headers

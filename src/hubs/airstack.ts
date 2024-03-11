@@ -10,7 +10,7 @@ export const airstack = createHub((parameters: AirstackHubParameters) => {
     apiUrl: 'https://hubs.airstack.xyz',
     fetchOptions: {
       headers: {
-        "x-airstack-hubs": apiKey,
+        'x-airstack-hubs': apiKey,
       },
     },
   }

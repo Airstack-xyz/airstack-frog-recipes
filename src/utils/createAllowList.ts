@@ -1,42 +1,60 @@
-import { fetchQuery } from "@airstack/frames";
+import { fetchQuery } from '@airstack/frames'
 
 export interface AllowListCriteria {
-  eventIds?: number[];
-  isFollowingOnFarcaster?: number[];
-  numberOfFollowersOnFarcaster?: number;
+  eventIds?: number[]
+  isFollowingOnFarcaster?: number[]
+  numberOfFollowersOnFarcaster?: number
 }
 
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  Address: { input: any; output: any; }
-  DateRange: { input: any; output: any; }
-  Identity: { input: any; output: any; }
-  IntString: { input: any; output: any; }
-  Map: { input: any; output: any; }
-  Range: { input: any; output: any; }
-  Time: { input: any; output: any; }
-  TimeRange: { input: any; output: any; }
-};
+  ID: { input: string; output: string }
+  String: { input: string; output: string }
+  Boolean: { input: boolean; output: boolean }
+  Int: { input: number; output: number }
+  Float: { input: number; output: number }
+  Address: { input: any; output: any }
+  DateRange: { input: any; output: any }
+  Identity: { input: any; output: any }
+  IntString: { input: any; output: any }
+  Map: { input: any; output: any }
+  Range: { input: any; output: any }
+  Time: { input: any; output: any }
+  TimeRange: { input: any; output: any }
+}
 
-export type Maybe<T> = T | null;
-export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type Maybe<T> = T | null
+export type InputMaybe<T> = Maybe<T>
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K]
+}
 
 export type CreateAllowListQueryVariables = Exact<{
-  identity: Scalars['Identity']['input'];
-  eventIds: InputMaybe<Array<Scalars['String']['input']> | Scalars['String']['input']>;
-  isFollowingOnFarcaster: InputMaybe<Array<Scalars['Identity']['input']> | Scalars['Identity']['input']>;
-  fid: Scalars['String']['input'];
-  followerCountOnFarcaster: Scalars['Int']['input'];
-}>;
+  identity: Scalars['Identity']['input']
+  eventIds: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >
+  isFollowingOnFarcaster: InputMaybe<
+    Array<Scalars['Identity']['input']> | Scalars['Identity']['input']
+  >
+  fid: Scalars['String']['input']
+  followerCountOnFarcaster: Scalars['Int']['input']
+}>
 
-
-export type CreateAllowListQuery = { poaps: { Poap: Array<{ eventId: string | null }> | null } | null, isFollowingOnFarcaster: { socialFollowers: { Follower: Array<{ followingAddress: { farcaster: Array<{ fid: string | null }> | null } | null }> | null } | null } | null, numberOfFollowersOnFarcaster: { Social: Array<{ followerCount: number | null }> | null } | null };
-
+export type CreateAllowListQuery = {
+  poaps: { Poap: Array<{ eventId: string | null }> | null } | null
+  isFollowingOnFarcaster: {
+    socialFollowers: {
+      Follower: Array<{
+        followingAddress: {
+          farcaster: Array<{ fid: string | null }> | null
+        } | null
+      }> | null
+    } | null
+  } | null
+  numberOfFollowersOnFarcaster: {
+    Social: Array<{ followerCount: number | null }> | null
+  } | null
+}
 
 const query = /* GraphQL */ `
   query CreateAllowList(
@@ -95,38 +113,37 @@ const query = /* GraphQL */ `
       }
     }
   }
-`;
-
+`
 
 export async function createAllowList(
   fid: number | undefined,
-  allowListCriteria: AllowListCriteria
+  allowListCriteria: AllowListCriteria,
 ): Promise<boolean> {
   const { eventIds, numberOfFollowersOnFarcaster, isFollowingOnFarcaster } =
-    allowListCriteria;
+    allowListCriteria
   const variables: CreateAllowListQueryVariables = {
-    fid: fid?.toString() ?? "1",
+    fid: fid?.toString() ?? '1',
     identity: `fc_fid:${fid}`,
     eventIds: eventIds?.map((id) => id.toString()) ?? [],
     isFollowingOnFarcaster: isFollowingOnFarcaster?.map((id) => `fc_fid:${id}`),
     followerCountOnFarcaster: numberOfFollowersOnFarcaster ?? 30,
-  };
+  }
   const { data, error }: { data: CreateAllowListQuery; error: any } =
-    await fetchQuery(query, variables);
+    await fetchQuery(query, variables)
 
   if (!error) {
     const {
       poaps,
       isFollowingOnFarcaster: Follower,
       numberOfFollowersOnFarcaster,
-    } = data ?? {};
+    } = data ?? {}
     return (
       true &&
       (eventIds
         ?.map((id) => ({
           eventId: id,
           isAttended: (poaps?.Poap ?? [])?.some(
-            (p: any) => p?.eventId === id?.toString()
+            (p: any) => p?.eventId === id?.toString(),
           ),
         }))
         ?.every(({ isAttended }) => isAttended) ??
@@ -137,16 +154,15 @@ export async function createAllowList(
           isFollowing: (Follower?.socialFollowers?.Follower ?? [])?.some(
             (f: any) =>
               f?.followingAddress?.farcaster?.some(
-                (fc: { fid: string | null }) => fc?.fid === fid.toString()
-              )
+                (fc: { fid: string | null }) => fc?.fid === fid.toString(),
+              ),
           ),
         }))
         ?.every(({ isFollowing }) => isFollowing) ??
         true) &&
       (numberOfFollowersOnFarcaster?.Social ?? []).length > 0
-    );
-  } else {
-    console.log(error);
-    throw new Error(error);
+    )
   }
+  console.log(error)
+  throw new Error(error)
 }
