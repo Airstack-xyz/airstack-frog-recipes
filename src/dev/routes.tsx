@@ -1,6 +1,6 @@
 import { bytesToHex } from '@noble/curves/abstract/utils'
 import { ed25519 } from '@noble/curves/ed25519'
-import { type Schema } from 'hono'
+import type { Schema } from 'hono'
 import {
   deleteCookie,
   getCookie,
@@ -10,11 +10,11 @@ import {
 } from 'hono/cookie'
 import { inspectRoutes } from 'hono/dev'
 import { jsxRenderer } from 'hono/jsx-renderer'
-import { type CookieOptions } from 'hono/utils/cookie'
+import type { CookieOptions } from 'hono/utils/cookie'
 import { validator } from 'hono/validator'
 import { mnemonicToAccount } from 'viem/accounts'
 
-import { type FrogBase } from '../frog-base.js'
+import type { FrogBase } from '../frog-base.js'
 import type { Env } from '../types/env.js'
 import { verify } from '../utils/jws.js'
 import { parsePath } from '../utils/parsePath.js'
@@ -24,9 +24,9 @@ import { Preview, type PreviewProps } from './components/Preview.js'
 import { QRCode } from './components/QRCode.js'
 import { Scripts } from './components/Scripts.js'
 import { Styles } from './components/Styles.js'
-import {
-  type SignedKeyRequestResponse,
-  type UserDataByFidResponse,
+import type {
+  SignedKeyRequestResponse,
+  UserDataByFidResponse,
 } from './types.js'
 import { fetchFrame } from './utils/fetchFrame.js'
 import { getHtmlSize } from './utils/getHtmlSize.js'

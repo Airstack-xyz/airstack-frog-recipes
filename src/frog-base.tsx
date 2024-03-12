@@ -1,9 +1,9 @@
 import { detect } from 'detect-browser'
 import { Hono } from 'hono'
 import { ImageResponse, type ImageResponseOptions } from 'hono-og'
-import { type HonoOptions } from 'hono/hono-base'
+import type { HonoOptions } from 'hono/hono-base'
 import { html } from 'hono/html'
-import { type Schema } from 'hono/types'
+import type { Schema } from 'hono/types'
 import lz from 'lz-string'
 // TODO: maybe write our own "modern" universal path (or resolve) module.
 // We are not using `node:path` to remain compatible with Edge runtimes.
@@ -14,14 +14,11 @@ import { config } from './config.js'
 import { airstack } from './hubs/airstack.js'
 import type { FrameContext, TransactionContext } from './types/context.js'
 import type { Env } from './types/env.js'
-import {
-  type FrameImageAspectRatio,
-  type FrameResponse,
-} from './types/frame.js'
+import type { FrameImageAspectRatio, FrameResponse } from './types/frame.js'
 import type { Hub } from './types/hub.js'
 import type { HandlerResponse } from './types/response.js'
 import type { TransactionResponse } from './types/transaction.js'
-import { type Pretty } from './types/utils.js'
+import type { Pretty } from './types/utils.js'
 import { fromQuery } from './utils/fromQuery.js'
 import { getButtonValues } from './utils/getButtonValues.js'
 import { getFrameContext } from './utils/getFrameContext.js'

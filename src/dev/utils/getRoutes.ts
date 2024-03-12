@@ -1,4 +1,4 @@
-import { inspectRoutes } from 'hono/dev'
+import type { inspectRoutes } from 'hono/dev'
 
 export function getRoutes(
   baseUrl: string,
