@@ -1,3 +1,4 @@
+import { CreateAllowListQuery } from './_lib/utils/createAllowList'
 export { parseEther } from 'viem'
 
 export {
@@ -37,3 +38,8 @@ export type {
   TransactionParameters,
 } from './types/transaction.js'
 export * from '@airstack/frames'
+export {
+  createAllowList,
+  type CreateAllowListQuery,
+  type CreateAllowListQueryVariables,
+} from './utils/createAllowList.js'
