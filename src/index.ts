@@ -37,8 +37,8 @@ export type {
   TransactionParameters,
 } from './types/transaction.js'
 export * from '@airstack/frames'
-export {
-  createAllowList,
-  type CreateAllowListQuery,
-  type CreateAllowListQueryVariables,
-} from './utils/createAllowList.js'
+// export {
+//   createAllowList,
+//   type CreateAllowListQuery,
+//   type CreateAllowListQueryVariables,
+// } from './utils/createAllowList.js'
