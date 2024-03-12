@@ -83,7 +83,10 @@
   },
   "license": "MIT",
   "homepage": "https://airstack.xyz",
-  "repository": "airstack-xyz/airstack-frog-recipes",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Airstack-xyz/airstack-frog-recipes"
+  },
   "authors": ["YosephKS"],
   "keywords": [
     "eth",
