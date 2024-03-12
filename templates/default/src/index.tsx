@@ -1,5 +1,6 @@
-import { Button,gFrog, TextInput , TextInpairstacktfrog
-import { serveStaticno/node-sehonovnode-server/serve-staticatic'
+import { serve } from '@hono/node-server'
+import { serveStatic } from '@hono/node-server/serve-static'
+import { Button, Frog, TextInput } from 'frog'
 // import { neynar } from 'frog/hubs'
 
 export const app = new Frog({
