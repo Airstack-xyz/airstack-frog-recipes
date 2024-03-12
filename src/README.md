@@ -4,7 +4,7 @@
   <a href="https://airstack.xyz">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.png">
-      <img alt="frog logo" src="./assets/logo-light.png" width="auto" height="50">
+      <img alt="frog logo" src="./assets/logo-light.png" width="auto" height="100">
     </picture>
   </a>
 </p>
