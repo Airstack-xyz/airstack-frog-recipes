@@ -1,4 +1,3 @@
-import { CreateAllowListQuery } from './_lib/utils/createAllowList'
 export { parseEther } from 'viem'
 
 export {
