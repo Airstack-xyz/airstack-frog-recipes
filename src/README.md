@@ -3,8 +3,8 @@
 <p align="center">
   <a href="https://airstack.xyz">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/paradigm-collab-dark.svg">
-      <img alt="frog logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/paradigm-collab-light.svg" width="auto" height="50">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.png">
+      <img alt="frog logo" src="./assets/logo-light.png" width="auto" height="50">
     </picture>
   </a>
 </p>
