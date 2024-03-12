@@ -12,8 +12,11 @@ async function rewriteHonoJsx() {
     await Bun.write(
       file,
       content
-        .replaceAll('hono/jsx/jsx-runtime', 'frog/jsx/jsx-runtime')
-        .replaceAll('hono/jsx/jsx-dev-runtime', 'frog/jsx/jsx-dev-runtime'),
+        .replaceAll('hono/jsx/jsx-runtime', '@airstack/frog/jsx/jsx-runtime')
+        .replaceAll(
+          'hono/jsx/jsx-dev-runtime',
+          '@airstack/frog/jsx/jsx-dev-runtime',
+        ),
     )
   }
 }

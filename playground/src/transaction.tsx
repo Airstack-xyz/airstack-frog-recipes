@@ -1,8 +1,8 @@
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 
 export const app = new Frog()
 
-app.frame('/', (c) => {
+app.frame('/', (c: any) => {
   return c.res({
     image: (
       <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
@@ -18,7 +18,7 @@ app.frame('/', (c) => {
 })
 
 // Raw transaction
-app.transaction('/raw-send', (c) => {
+app.transaction('/raw-send', (c: any) => {
   return c.res({
     chainId: 'eip155:10',
     method: 'eth_sendTransaction',
@@ -30,7 +30,7 @@ app.transaction('/raw-send', (c) => {
 })
 
 // Send transaction
-app.transaction('/send', (c) => {
+app.transaction('/send', (c: any) => {
   return c.send({
     chainId: 'eip155:10',
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',
@@ -39,7 +39,7 @@ app.transaction('/send', (c) => {
 })
 
 // Contract transaction
-app.transaction('/mint', (c) => {
+app.transaction('/mint', (c: any) => {
   return c.contract({
     abi: wagmiExampleAbi,
     chainId: 'eip155:10',
@@ -49,7 +49,7 @@ app.transaction('/mint', (c) => {
 })
 
 // Send tansaction with path parameter
-app.transaction('/send/:value', (c) => {
+app.transaction('/send/:value', (c: any) => {
   return c.send({
     chainId: 'eip155:10',
     to: '0xd2135CfB216b74109775236E36d4b433F1DF507B',

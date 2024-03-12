@@ -1,4 +1,4 @@
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 
 export const app = new Frog<{
   State: {
@@ -6,16 +6,17 @@ export const app = new Frog<{
     todos: { completed: boolean; name: string }[]
   }
 }>({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   initialState: {
     index: -1,
     todos: [],
   },
 })
 
-app.frame('/', (c) => {
+app.frame('/', (c: any) => {
   const { buttonValue, deriveState, inputText } = c
 
-  const { index, todos } = deriveState((state) => {
+  const { index, todos } = deriveState((state: any) => {
     if (inputText) {
       state.todos.push({ completed: false, name: inputText })
     }
@@ -33,7 +34,7 @@ app.frame('/', (c) => {
     image: (
       <div tw="flex flex-col w-full h-full p-10 bg-black">
         <div tw="text-white text-6xl">TODO List</div>
-        {todos.map((todo, i) => (
+        {todos.map((todo: any, i: any) => (
           <div tw="text-white flex text-4xl mt-5">
             {todo.completed ? '✅' : '◻️'} {todo.name} {i === index ? '👈' : ''}
           </div>
@@ -50,7 +51,7 @@ app.frame('/', (c) => {
   })
 })
 
-app.frame('/foo', (c) => {
+app.frame('/foo', (c: any) => {
   return c.res({
     image: (
       <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>

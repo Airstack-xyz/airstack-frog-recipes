@@ -1,5 +1,5 @@
-import { type FrameContext } from '../../types/context.js'
-import { type Frame as FrameType, type RequestBody } from '../types.js'
+import type { FrameContext } from '../../types/context.js'
+import type { Frame as FrameType, RequestBody } from '../types.js'
 import { Data } from './Data.js'
 import { Frame } from './Frame.js'
 import { Metrics } from './Metrics.js'

@@ -1,7 +1,7 @@
-import { type JSXNode } from 'hono/jsx'
+import type { JSXNode } from 'hono/jsx'
 
 import { buttonPrefix } from '../components/Button.js'
-import { type FrameIntents } from '../types/frame.js'
+import type { FrameIntents } from '../types/frame.js'
 import { parsePath } from './parsePath.js'
 
 type Counter = { button: number }
@@ -97,7 +97,7 @@ class InvalidIntentComponentError extends Error {
         'Example:',
         '',
         '```',
-        "import { Button } from 'frog'",
+        "import { Button } from '@airstack/frog'",
         '',
         'function CustomIntent() {',
         '  return <Button>Foo</Button>',

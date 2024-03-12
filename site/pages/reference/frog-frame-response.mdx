@@ -4,7 +4,7 @@ The response returned from the `.frame` handler.
 
 ```tsx twoslash
 // @noErrors
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
  
 export const app = new Frog()
 
@@ -24,7 +24,7 @@ Path of the next frame to perform a `POST` request.
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -63,7 +63,7 @@ when they arrive via their browser.
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -95,7 +95,7 @@ HTTP response headers to set for the frame.
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -128,7 +128,7 @@ The Image to render for the frame. Can either be a JSX element, or URL.
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -154,7 +154,7 @@ app.frame('/', (c) => {
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -181,7 +181,7 @@ The aspect ratio of the image to render for the frame.
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -212,7 +212,7 @@ app.frame('/', (c) => {
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -245,7 +245,7 @@ The `fonts` property is not available on the `imageOptions` passed to `c.res`. I
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
  
 export const app = new Frog({
   imageOptions: { fonts: [/* ... */] } // [!code focus]
@@ -257,7 +257,7 @@ export const app = new Frog({
 ```tsx twoslash
 // @noErrors
 /** @jsxImportSource frog/jsx */
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
  
 export const app = new Frog({
   imageOptions: { fonts: [/* ... */] }
@@ -280,7 +280,7 @@ A set of intents (ie. buttons, text inputs, etc) to render for the frame
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -309,7 +309,7 @@ Title of the frame (added as `og:title`).
 
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 // ---cut---
 export const app = new Frog()
  

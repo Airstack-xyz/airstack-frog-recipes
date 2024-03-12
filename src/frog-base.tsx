@@ -1,24 +1,24 @@
 import { detect } from 'detect-browser'
 import { Hono } from 'hono'
 import { ImageResponse, type ImageResponseOptions } from 'hono-og'
-import { type HonoOptions } from 'hono/hono-base'
+import type { HonoOptions } from 'hono/hono-base'
 import { html } from 'hono/html'
-import { type Schema } from 'hono/types'
+import type { Schema } from 'hono/types'
 import lz from 'lz-string'
 // TODO: maybe write our own "modern" universal path (or resolve) module.
 // We are not using `node:path` to remain compatible with Edge runtimes.
 import { default as p } from 'path-browserify'
 
+import { init } from '@airstack/frames'
+import { config } from './config.js'
+import { airstack } from './hubs/airstack.js'
 import type { FrameContext, TransactionContext } from './types/context.js'
 import type { Env } from './types/env.js'
-import {
-  type FrameImageAspectRatio,
-  type FrameResponse,
-} from './types/frame.js'
+import type { FrameImageAspectRatio, FrameResponse } from './types/frame.js'
 import type { Hub } from './types/hub.js'
 import type { HandlerResponse } from './types/response.js'
 import type { TransactionResponse } from './types/transaction.js'
-import { type Pretty } from './types/utils.js'
+import type { Pretty } from './types/utils.js'
 import { fromQuery } from './utils/fromQuery.js'
 import { getButtonValues } from './utils/getButtonValues.js'
 import { getFrameContext } from './utils/getFrameContext.js'
@@ -36,9 +36,12 @@ import { version } from './version.js'
 export type FrogConstructorParameters<
   env extends Env = Env,
   basePath extends string = '/',
-  //
   _state = env['State'],
 > = Pick<FrameResponse, 'browserLocation'> & {
+  /**
+   * Airstack API key. Get your Airstack API key at https://app.airstack.xyz
+   */
+  apiKey: string
   /**
    * The base path for assets.
    *
@@ -166,7 +169,7 @@ export type RouteOptions = Pick<FrogConstructorParameters, 'verify'> & {
  *
  * @example
  * ```
- * import { Frog } from 'frog'
+ * import { Frog } from '@airstack/frog'
  *
  * const app = new Frog()
  *
@@ -198,7 +201,8 @@ export class FrogBase<
   // Note: not using native `private` fields to avoid tslib being injected
   // into bundled code.
   _initialState: env['State'] = undefined as env['State']
-
+  /** Airstack API key */
+  apiKey!: string
   /** Path for assets. */
   assetsPath: string
   /** Base path of the server instance. */
@@ -229,28 +233,37 @@ export class FrogBase<
   /** Whether or not frames should be verified. */
   verify: FrogConstructorParameters['verify'] = true
 
-  constructor({
-    assetsPath,
-    basePath,
-    browserLocation,
-    dev,
-    headers,
-    honoOptions,
-    hubApiUrl,
-    hub,
-    imageAspectRatio,
-    imageOptions,
-    initialState,
-    secret,
-    verify,
-  }: FrogConstructorParameters<env, basePath, _state> = {}) {
+  constructor(
+    {
+      apiKey,
+      assetsPath,
+      basePath,
+      browserLocation,
+      dev,
+      headers,
+      honoOptions,
+      hubApiUrl,
+      hub,
+      imageAspectRatio,
+      imageOptions,
+      initialState,
+      secret,
+      verify,
+    }: FrogConstructorParameters<env, basePath, _state> = { apiKey: '' },
+  ) {
     this.hono = new Hono<env, schema, basePath>(honoOptions)
+    this.hub =
+      process.env.NODE_ENV === 'production'
+        ? hub ??
+          airstack({
+            apiKey: apiKey as string,
+          })
+        : undefined
     if (basePath) this.hono = this.hono.basePath(basePath)
     if (browserLocation) this.browserLocation = browserLocation
     if (headers) this.headers = headers
     if (dev) this.dev = { enabled: true, ...(dev ?? {}) }
     if (hubApiUrl) this.hubApiUrl = hubApiUrl
-    if (hub) this.hub = hub
     if (imageAspectRatio) this.imageAspectRatio = imageAspectRatio
     if (imageOptions) this.imageOptions = imageOptions
     if (secret) this.secret = secret
@@ -264,6 +277,9 @@ export class FrogBase<
     this.use = this.hono.use.bind(this.hono)
 
     if (initialState) this._initialState = initialState
+
+    init(apiKey)
+    config.authKey = apiKey
   }
 
   frame<path extends string>(

@@ -1,10 +1,10 @@
 <br/>
 
 <p align="center">
-  <a href="https://paradigm.xyz">
+  <a href="https://airstack.xyz">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/wevm/.github/main/content/paradigm-collab-dark.svg">
-      <img alt="frog logo" src="https://raw.githubusercontent.com/wevm/.github/main/content/paradigm-collab-light.svg" width="auto" height="50">
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.png">
+      <img alt="frog logo" src="./assets/logo-light.png" width="auto" height="150">
     </picture>
   </a>
 </p>
@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  Framework for Farcaster Frames
+  Airstack Flavour 🐸 Framework for Farcaster Frames
 <p>
 
 <p align="center">
@@ -29,7 +29,7 @@
       <img src="https://img.shields.io/npm/v/frog?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Version">
     </picture>
   </a>
-  <a href="https://github.com/wevm/frog/blob/main/LICENSE">
+  <a href="https://github.com/airstack-xyz/airstack-frog-recipes/blob/main/LICENSE">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/frog?colorA=21262d&colorB=21262d&style=flat">
       <img src="https://img.shields.io/npm/l/frog?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
@@ -37,31 +37,43 @@
   </a>
 </p>
 
-## Documentation
+## Get Started
+
+```
+npm i @airstack/frog
+```
+
+## Migration from Frog
+
+The Airstack Frog Recipe contains all the features that are supported in the [Frog](https://frog.fm) Framework.
+
+Therefore you can simply change the import of any Frog functions from `frog` to `@airstack/frog` and provide an [Airstack API key](https://app.airstack.xyz/profile-settings/api-keys) when creating new Frog instances:
+
+```ts
+// Using Frog (initial)
+import { Frog } from "frog";
+
+export const app = new Frog();
+
+// Using Airstack Frog Recipe (after migration)
+import { Frog } from "@airstack/frog";
+
+export const app = new Frog({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
+});
+```
+
+## Learn More
 
 [Head to the documentation](https://frog.fm/) to read and learn more about Frog.
 
-## Community
+## Developer Support
 
-Check out the following places for more Frog-related content:
-
-- Follow [@awkweb](https://warpcast.com/awkweb), [@jxom](https://warpcast.com/jxom), and [@wevm_dev](https://warpcast.com/wevm_dev) on Warpcast for project updates
-- Join the [discussions on GitHub](https://github.com/wevm/frog/discussions)
-
-## Support
-
-- [GitHub Sponsors](https://github.com/sponsors/wevm?metadata_campaign=docs_support)
-- [Gitcoin Grant](https://wagmi.sh/gitcoin)
-- [wevm.eth](https://etherscan.io/enslookup-search?search=wevm.eth)
+If you need any help or assistance in building your Farcaster Frame using Airstack Frog Recipes, you can get in touch with us on our [Telegram](https://t.me/+1k3c2FR7z51mNDRh).
 
 ## Contributing
 
 If you're interested in contributing, please read the [contributing docs](/.github/CONTRIBUTING.md) **before submitting a pull request**.
-
-## Authors
-
-- [@jxom](https://github.com/jxom) (jxom.eth, [Warpcast](https://warpcast.com/jxom))
-- [@tmm](https://github.com/tmm) (awkweb.eth, [Warpcast](https://warpcast.com/awkweb))
 
 ## License
 

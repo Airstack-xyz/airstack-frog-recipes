@@ -1,3 +1,4 @@
+import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { Button, Frog, TextInput } from 'frog'
 // import { neynar } from 'frog/hubs'

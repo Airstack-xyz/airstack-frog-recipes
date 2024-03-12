@@ -1,4 +1,4 @@
-import { type ImageResponseOptions } from 'hono-og'
+import type { ImageResponseOptions } from 'hono-og'
 import type { TypedResponse } from './response.js'
 
 export type FrameResponse = {

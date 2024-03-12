@@ -11,7 +11,7 @@ Let's start by building a couple of frames below: one that asks the user for the
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -56,7 +56,7 @@ You can think of the `action` property as an alias for [`post_url` in the Frame 
 ```tsx twoslash
 // @noErrors
 /** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -88,7 +88,7 @@ Now, when a user clicks on a button in the first frame, the `POST` request will 
 
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
 // ---cut---
@@ -135,7 +135,7 @@ We can also set actions on individual buttons via the `action` prop on `<Button>
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  

@@ -36,7 +36,7 @@ Next, scaffold your frame:
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 
 export const app = new Frog()
 
@@ -77,7 +77,7 @@ After that, we will append a Node server to the file.
 /** @jsxImportSource frog/jsx */
 // ---cut---
 import { serve } from '@hono/node-server' // [!code focus]
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 
 export const app = new Frog()
 
@@ -152,7 +152,7 @@ they will be redirected to the `/foo` path.
 /** @jsxImportSource frog/jsx */
 // ---cut---
 import { serve } from '@hono/node-server'
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 
 export const app = new Frog({
   browserLocation: '/:path', // [!code focus]

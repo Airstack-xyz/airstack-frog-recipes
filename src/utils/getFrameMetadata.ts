@@ -28,7 +28,7 @@ export const metaTagPropertyRegex = /^(fc|frog|og:image|og:title)/
  * Extracts frame metadata from a given URL.
  *
  * @example
- * import { getFrameMetadata } from 'frog'
+ * import { getFrameMetadata } from '@airstack/frog'
  * const frameMetadata = await getFrameMetadata(`https://myframe.com/api`)
  */
 export async function getFrameMetadata(url: string): Promise<FrameMetadata> {
