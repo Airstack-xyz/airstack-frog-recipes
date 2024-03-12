@@ -43,6 +43,8 @@
 
 ## Developer Support
 
+If you need any help or assistance in building your Farcaster Frame using Airstack Frog Recipes, you can get in touch with us on our [Telegram](https://t.me/+1k3c2FR7z51mNDRh).
+
 ## Contributing
 
 If you're interested in contributing, please read the [contributing docs](/.github/CONTRIBUTING.md) **before submitting a pull request**.
