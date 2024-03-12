@@ -4,7 +4,7 @@
   <a href="https://airstack.xyz">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="./assets/logo-dark.png">
-      <img alt="frog logo" src="./assets/logo-light.png" width="auto" height="100">
+      <img alt="frog logo" src="./assets/logo-light.png" width="auto" height="150">
     </picture>
   </a>
 </p>
@@ -37,7 +37,33 @@
   </a>
 </p>
 
-## Documentation
+## Get Started
+
+```
+npm i @airstack/frog
+```
+
+## Migration from Frog
+
+The Airstack Frog Recipe contains all the features that are supported in the [Frog](https://frog.fm) Framework.
+
+Therefore you can simply change the import of any Frog functions from `frog` to `@airstack/frog` and provide an [Airstack API key](https://app.airstack.xyz/profile-settings/api-keys) when creating new Frog instances:
+
+```ts
+// Using Frog (initial)
+import { Frog } from "frog";
+
+export const app = new Frog();
+
+// Using Airstack Frog Recipe (after migration)
+import { Frog } from "@airstack/frog";
+
+export const app = new Frog({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
+});
+```
+
+## Learn More
 
 [Head to the documentation](https://frog.fm/) to read and learn more about Frog.
 
