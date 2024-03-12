@@ -1,12 +1,12 @@
-import { type Schema } from 'hono'
+import type { Schema } from 'hono'
 
 import { routes as devRoutes } from './dev/routes.js'
 import { FrogBase, type RouteOptions } from './frog-base.js'
-import { type FrameContext } from './types/context.js'
+import type { FrameContext } from './types/context.js'
 import type { Env } from './types/env.js'
-import { type FrameResponse } from './types/frame.js'
+import type { FrameResponse } from './types/frame.js'
 import type { HandlerResponse } from './types/response.js'
-import { type Pretty } from './types/utils.js'
+import type { Pretty } from './types/utils.js'
 
 /**
  * A Frog instance.
