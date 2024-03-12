@@ -5,7 +5,7 @@ import { version } from '../version.js'
 import { dev } from './commands/dev.js'
 import { build as build_vercel } from './commands/vercel-build.js'
 
-export const cli = cac('airstack-frog')
+export const cli = cac('@airstack/frog')
 
 cli
   .command(
