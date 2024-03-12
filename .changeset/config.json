@@ -2,7 +2,10 @@
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
   "access": "public",
   "baseBranch": "main",
-  "changelog": ["@changesets/changelog-github", { "repo": "airstack/airstack-frog-recipes" }],
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "airstack/airstack-frog-recipes" }
+  ],
   "commit": false,
   "fixed": [],
   "ignore": ["playground", "site", "template-*", "create-frog"],
