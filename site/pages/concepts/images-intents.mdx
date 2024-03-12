@@ -20,7 +20,7 @@ In **Frog**, an **Image** can be rendered via the `image` return property:
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -55,7 +55,7 @@ You can also specify an image URL:
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -79,7 +79,7 @@ app.frame('/', (c) => {
 ```tsx twoslash [src/index.tsx]
 // @noErrors
 /** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
 // ---cut---
@@ -111,7 +111,7 @@ You can also pass a set of default options to the `Frog` constructor:
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog({
   imageOptions: { height: 600, width: 600 }
@@ -147,7 +147,7 @@ In **Frog**, **Intents** are rendered via the `intent` return property:
 ```tsx twoslash [src/index.tsx]
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog, TextInput } from 'frog' // [!code focus]
+import { Button, Frog, TextInput } from '@airstack/frog' // [!code focus]
  
 export const app = new Frog()
  

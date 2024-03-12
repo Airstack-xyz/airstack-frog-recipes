@@ -12,7 +12,7 @@ At a high-level, the most basic **Frog** application looks like this:
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -48,7 +48,7 @@ Below, we will break down high-level concepts of the above example.
 Before we can instantiate an application, we need to import the `Frog` class.
 
 ```tsx twoslash
-import { Button, Frog } from 'frog' // [!code focus]
+import { Button, Frog } from '@airstack/frog' // [!code focus]
  
 export const app = new Frog()
 
@@ -65,7 +65,7 @@ We instantiate a new **Frog** application by calling the `Frog` class.
 
 ```tsx twoslash
 // @noErrors
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog() // [!code focus]
 
@@ -98,7 +98,7 @@ get frame metadata.
 
 ```tsx twoslash
 // @noErrors
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 // ---cut---
 export const app = new Frog()
@@ -116,7 +116,7 @@ You can also define multiple routes by specifying alternative paths.
 
 ```tsx twoslash
 // @noErrors
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 // ---cut---
 export const app = new Frog()
@@ -138,7 +138,7 @@ You can also define `GET`, `POST`, etc routes via the [Hono](https://hono.dev) i
 
 ```tsx twoslash
 // @noErrors
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 // ---cut---
 export const app = new Frog()
@@ -167,7 +167,7 @@ The `c` parameter in the frame route contains properties about the frame, such a
 
 ```tsx twoslash
 // @noErrors
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 // ---cut---
 export const app = new Frog()
@@ -191,7 +191,7 @@ We can represent this in the **Frog** API via the `image` and `intents` properti
 ```tsx twoslash [src/index.tsx]
 // @noErrors
 /** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
 // ---cut---

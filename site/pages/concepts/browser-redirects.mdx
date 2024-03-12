@@ -22,7 +22,7 @@ they will be redirected to the `/` path as `browserLocation` is set on the `Frog
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog({
   browserLocation: '/' // [!code hl]
@@ -42,7 +42,7 @@ they will be redirected to the `/` path as `browserLocation` is set on the retur
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
  
@@ -65,7 +65,7 @@ they will be redirected to the `/:foo/:bar` path (e.g. `/a/b`), provided that th
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog({
   browserLocation: '/:foo/:bar' // [!code hl]
@@ -87,7 +87,7 @@ they will be redirected to the `/foo` path.
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog({
   basePath: '/api', // [!code hl]
@@ -112,7 +112,7 @@ they will be redirected to the `/api/foo/dev` path.
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog({
   basePath: '/api', // [!code hl]

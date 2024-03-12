@@ -1,6 +1,6 @@
-import { serve } from '@hono/node-server'
-import { serveStatic } from '@hono/node-server/serve-static'
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInputn, Frog, Tairstacknfrog'@airstack/frog'
+import { servem '@hono/node-server'
+import { serveStatic o/node-sehonovnode-server/serve-staticatic'
 // import { neynar } from 'frog/hubs'
 
 export const app = new Frog({

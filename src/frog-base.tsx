@@ -172,7 +172,7 @@ export type RouteOptions = Pick<FrogConstructorParameters, 'verify'> & {
  *
  * @example
  * ```
- * import { Frog } from 'frog'
+ * import { Frog } from '@airstack/frog'
  *
  * const app = new Frog()
  *

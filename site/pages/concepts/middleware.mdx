@@ -13,7 +13,7 @@ Frog comes with a built-in middleware for [Neynar](https://neynar.com) which all
 ```tsx twoslash
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 import { type NeynarVariables, neynar } from 'frog/middlewares'
 
 export const app = new Frog<{ 
@@ -68,7 +68,7 @@ You can write your own Frog middleware. This is great if you want to share commo
 
 ```tsx twoslash
 // @noErrors
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
  
 export const app = new Frog()
 

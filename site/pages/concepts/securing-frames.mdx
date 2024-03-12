@@ -18,7 +18,7 @@ user that interacted with it.
 ```tsx twoslash
 // @noErrors
 /** @jsxImportSource frog/jsx */
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
  
 export const app = new Frog()
 
@@ -49,7 +49,7 @@ Frog currently supports [`neynar`](/hubs/neynar) as a built-in Hub.
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 import { neynar } from 'frog/hubs' // [!code focus]
  
 export const app = new Frog({
@@ -70,7 +70,7 @@ You can also supply your own Hub API URL:
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
  
 export const app = new Frog({
   hub: { apiUrl: 'https://myhub.com' } // [!code focus]
@@ -92,7 +92,7 @@ The `"silent"` flag is an inversion of control to the consumer. Only use `"silen
 // @noErrors
 /** @jsxImportSource frog/jsx */
 // ---cut---
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
  
 export const app = new Frog({
   verify: 'silent' // [!code focus]
@@ -118,7 +118,7 @@ If a `secret` is provided to the `Frog` instance, then state will be signed auto
 
 ```tsx twoslash [src/index.ts]
 // @noErrors
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   secret: process.env.FROG_SECRET // [!code focus]

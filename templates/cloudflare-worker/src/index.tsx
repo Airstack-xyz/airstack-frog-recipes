@@ -1,4 +1,4 @@
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 // import { neynar } from 'frog/hubs'
 import { serveStatic } from 'hono/cloudflare-workers'
 

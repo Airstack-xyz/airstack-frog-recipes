@@ -56,7 +56,9 @@ export async function dev(
   logger.clearScreen('info')
   logger.info('')
   logger.info(
-    `  ${pc.green('[running]')} ${pc.bold('frog')}@${pc.dim(`v${version}`)}`,
+    `  ${pc.green('[running]')} ${pc.bold('@airstack/frog')}@${pc.dim(
+      `v${version}`,
+    )}`,
   )
   logger.info('')
   logger.info(

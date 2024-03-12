@@ -97,7 +97,7 @@ class InvalidIntentComponentError extends Error {
         'Example:',
         '',
         '```',
-        "import { Button } from 'frog'",
+        "import { Button } from '@airstack/frog'",
         '',
         'function CustomIntent() {',
         '  return <Button>Foo</Button>',

@@ -353,7 +353,7 @@ export default defineConfig({
     {
       text: 'Frog Reference',
       items: [
-        { text: 'Frog', link: '/reference/frog' },
+        { text: '@airstack/frog', link: '/reference/frog' },
         {
           text: 'Frog.frame',
           link: '/reference/frog-frame',
@@ -393,7 +393,7 @@ export default defineConfig({
       ],
     },
   ],
-  title: 'Frog',
+  title: '@airstack/frog',
   topNav: [
     {
       text: version,

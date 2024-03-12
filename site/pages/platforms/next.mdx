@@ -44,7 +44,7 @@ Next, scaffold your frame:
 // @noErrors
 // ---cut---
 /** @jsxImportSource frog/jsx */
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 
 const app = new Frog({ 
   basePath: '/api',
@@ -86,7 +86,7 @@ After that, we will add handlers to handle requests in the `api/` route:
 // @noErrors
 // ---cut---
 /** @jsxImportSource frog/jsx */
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 import { handle } from 'frog/next' // [!code focus]
 
 const app = new Frog({ 
@@ -178,7 +178,7 @@ they will be redirected to the `/foo` path (ie. `/app/foo/page.tsx` in your Next
 // @noErrors
 // ---cut---
 /** @jsxImportSource frog/jsx */
-import { Button, Frog, TextInput } from 'frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
 import { handle } from 'frog/next'
 
 const app = new Frog({ 

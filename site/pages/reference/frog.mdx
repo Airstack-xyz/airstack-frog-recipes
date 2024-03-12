@@ -3,13 +3,13 @@
 ## Import
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 ```
 
 ## Usage
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog() // [!code focus]
 ```
@@ -25,7 +25,7 @@ The base path for the server instance.
 For instance, if you are deploying your server to Vercel Serverless, you probably want to specify `/api`.
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   basePath: '/api' // [!code focus]
@@ -47,7 +47,7 @@ when they arrive via their browser.
 [Read more.](/concepts/browser-redirects)
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   basePath: '/api',
@@ -64,7 +64,7 @@ Options for built-in devtools.
 
 ```tsx twoslash
 // @noErrors
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   dev: { // [!code focus]
@@ -83,7 +83,7 @@ Default HTTP response headers to set for frames.
 
 ```tsx twoslash
 // @noErrors
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   headers: { // [!code focus]
@@ -99,7 +99,7 @@ const app = new Frog({
 Options to forward to the `Hono` instance.
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   honoOptions: { // [!code focus]
@@ -115,7 +115,7 @@ const app = new Frog({
 Farcaster Hub configuration.
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   hub: { // [!code focus]
@@ -127,7 +127,7 @@ const app = new Frog({
 Can also supply a built-in Hub configuration such as [`neynar`](/hubs/neynar).
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 import { neynar } from 'frog/hubs' // [!code focus]
 
 const app = new Frog({
@@ -149,7 +149,7 @@ Image options to apply to frames.
 [Read more.](https://vercel.com/docs/functions/og-image-generation/og-image-api)
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   imageOptions: { // [!code focus]
@@ -164,7 +164,7 @@ const app = new Frog({
 Initial state for the frames.
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 type State = {
   index: number
@@ -197,7 +197,7 @@ It's strongly recommended to add a strong secret key before deploying to product
 
 ```tsx twoslash [src/index.ts]
 // @noErrors
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   secret: process.env.FROG_SECRET // [!code focus]
@@ -222,7 +222,7 @@ Whether or not to verify frame data via the Farcaster Hub's `validateMessage` AP
 - When `false`, the frame will not go through verification.
 
 ```tsx twoslash
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 const app = new Frog({
   verify: 'silent' // [!code focus]

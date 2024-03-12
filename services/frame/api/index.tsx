@@ -1,5 +1,5 @@
 // import { serveStatic } from '@hono/node-server/serve-static'
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 import { handle } from 'frog/vercel'
 
 type State = {
