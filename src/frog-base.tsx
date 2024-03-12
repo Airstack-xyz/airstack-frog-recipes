@@ -256,10 +256,12 @@ export class FrogBase<
   ) {
     this.hono = new Hono<env, schema, basePath>(honoOptions)
     this.hub =
-      hub ??
-      airstack({
-        apiKey: apiKey as string,
-      })
+      process.env.NODE_ENV === 'production'
+        ? hub ??
+          airstack({
+            apiKey: apiKey as string,
+          })
+        : undefined
     if (basePath) this.hono = this.hono.basePath(basePath)
     if (browserLocation) this.browserLocation = browserLocation
     if (headers) this.headers = headers
