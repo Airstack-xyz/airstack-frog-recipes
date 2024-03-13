@@ -165,8 +165,8 @@ importers:
   src:
     dependencies:
       '@airstack/frames':
-        specifier: ^1.0.10
-        version: 1.0.10(typescript@5.4.2)
+        specifier: ^1.0.11
+        version: 1.0.11(typescript@5.4.2)
       '@bufbuild/protobuf':
         specifier: ^1.7.2
         version: 1.7.2
@@ -345,8 +345,8 @@ packages:
     resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
     dev: false
 
-  /@airstack/frames@1.0.10(typescript@5.4.2):
-    resolution: {integrity: sha512-tpXFC6/b9/xU93TkhZQh2kqiGX1tQdO7EFtaDeGIaBlZfUx41uIp0eV6MGZ1IFcEUnYGuVGMcj3hP+0ZlgYnSg==}
+  /@airstack/frames@1.0.11(typescript@5.4.2):
+    resolution: {integrity: sha512-WQQtgn32/Zkzr3OJUqFiHWsPxUc30z2F1M8V/7yFrhJMD0UmMukYEW5wrXKrJCqmB2boRTQddUrUR9AcDIg8AQ==}
     dependencies:
       '@airstack/node': 0.0.5
       '@farcaster/core': 0.14.7(typescript@5.4.2)
