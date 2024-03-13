@@ -55,6 +55,12 @@ export const app = new Frog({
 });
 ```
 
+To run your project, run the following command:
+
+```sh
+npx @airstack/frog dev
+```
+
 ## Learn More
 
 The Airstack Frog Recipes inherit all the functionalities that [Frog Framework](https://frog.fm) offers, with the integration of Airstack features.
