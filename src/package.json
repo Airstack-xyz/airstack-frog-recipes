@@ -87,9 +87,7 @@
     "type": "git",
     "url": "https://github.com/Airstack-xyz/airstack-frog-recipes"
   },
-  "authors": [
-    "YosephKS"
-  ],
+  "authors": ["YosephKS"],
   "keywords": [
     "eth",
     "ethereum",
