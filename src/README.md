@@ -25,37 +25,29 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/frog">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/frog?colorA=21262d&colorB=21262d&style=flat">
-      <img src="https://img.shields.io/npm/v/frog?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Version">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/@airstack/frog?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/v/@airstack/frog?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="Version">
     </picture>
   </a>
   <a href="https://github.com/airstack-xyz/airstack-frog-recipes/blob/main/LICENSE">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/frog?colorA=21262d&colorB=21262d&style=flat">
-      <img src="https://img.shields.io/npm/l/frog?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/l/@airstack/frog?colorA=21262d&colorB=21262d&style=flat">
+      <img src="https://img.shields.io/npm/l/@airstack/frog?colorA=f6f8fa&colorB=f6f8fa&style=flat" alt="MIT License">
     </picture>
   </a>
 </p>
 
 ## Get Started
 
+To get started, simply install the Airstack Frog Recipe:
+
+```sh
+npm i @airstack/frog hono
 ```
-npm i @airstack/frog
-```
 
-## Migration from Frog
-
-The Airstack Frog Recipe contains all the features that are supported in the [Frog](https://frog.fm) Framework.
-
-Therefore you can simply change the import of any Frog functions from `frog` to `@airstack/frog` and provide an [Airstack API key](https://app.airstack.xyz/profile-settings/api-keys) when creating new Frog instances:
+and create a new Frog instance with [Airstack API key](https://app.airstack.xyz/profile-settings/api-keys) (required) provided as an input:
 
 ```ts
-// Using Frog (initial)
-import { Frog } from "frog";
-
-export const app = new Frog();
-
-// Using Airstack Frog Recipe (after migration)
 import { Frog } from "@airstack/frog";
 
 export const app = new Frog({
@@ -63,9 +55,19 @@ export const app = new Frog({
 });
 ```
 
+To run your project, run the following command:
+
+```sh
+npx @airstack/frog dev
+```
+
 ## Learn More
 
-[Head to the documentation](https://frog.fm/) to read and learn more about Frog.
+The Airstack Frog Recipes inherit all the functionalities that [Frog Framework](https://frog.fm) offers, with the integration of Airstack features.
+
+For all Frog functionalities, head to [Frog documentation](https://frog.fm/) to read and learn more about Frog.
+
+For all Airstack features included in Airstack Frog Recipes, you can find more information about it [here](https://docs.airstack.xyz/airstack-docs-and-faqs/guides/airstack-frog-recipes).
 
 ## Developer Support
 
