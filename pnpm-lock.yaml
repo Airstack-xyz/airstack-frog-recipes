@@ -201,8 +201,8 @@ importers:
         specifier: ^4
         version: 4.1.0
       hono-og:
-        specifier: 0.0.22
-        version: 0.0.22(hono@4.1.0)
+        specifier: 0.0.25
+        version: 0.0.25(hono@4.1.0)
       jose:
         specifier: ^5.2.2
         version: 5.2.3
@@ -6149,6 +6149,16 @@ packages:
     dependencies:
       '@vercel/og': 0.6.2
       '@wevm/vercel-og': 0.6.12
+      hono: 4.1.0
+      workers-og: 0.0.23
+    dev: false
+
+  /hono-og@0.0.25(hono@4.1.0):
+    resolution: {integrity: sha512-HInHIU7oTP68C12l+RyCAq/0W801gAC1zd68dzxHBF/IRKmyXT9RH0ibDfCXru6dnQZEBdr2Um/M637MfycwiA==}
+    peerDependencies:
+      hono: '>=3'
+    dependencies:
+      '@vercel/og': 0.6.2
       hono: 4.1.0
       workers-og: 0.0.23
     dev: false
