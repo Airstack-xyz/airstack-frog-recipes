@@ -1,6 +1,7 @@
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 
 export const app = new Frog({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   imageOptions: {
     fonts: [
       {
@@ -19,7 +20,7 @@ export const app = new Frog({
       },
     ],
   },
-}).frame('/', (c) => {
+}).frame('/', (c: any) => {
   return c.res({
     image: (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
