@@ -7,9 +7,9 @@ export {
 } from './neynar.js'
 export {
   allowList,
-  AllowListMiddlewareParameters,
-  AllowListMiddlewareVariables,
+  type AllowListMiddlewareParameters,
+  type AllowListMiddlewareVariables,
   onchainData,
-  OnchainDataMiddlewareParameters,
-  OnchainDataVariables,
+  type OnchainDataMiddlewareParameters,
+  type OnchainDataVariables,
 } from '@airstack/frames'
