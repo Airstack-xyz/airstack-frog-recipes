@@ -1,7 +1,7 @@
 {
   "name": "@airstack/frog",
   "description": "Airstack Flavour 🐸 Framework for Farcaster Frames",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "module": "_lib/index.js",
   "types": "_lib/index.d.ts",
@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "@airstack/frames": "^1.0.12",
+    "@airstack/frames": "^1.0.18",
     "@bufbuild/protobuf": "^1.7.2",
     "@hono/vite-dev-server": "0.7.0",
     "@ngrok/ngrok": "^1.1.0",
