@@ -1,6 +1,5 @@
 import { Button, Frog, TextInput } from '@airstack/frog'
 import { devtools } from '@airstack/frog/dev'
-import * as hubs from '@airstack/frog/hubs'
 import { serveStatic } from '@hono/node-server/serve-static'
 
 import { app as fontsApp } from './fonts.js'
