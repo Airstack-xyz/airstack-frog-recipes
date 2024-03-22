@@ -1,4 +1,6 @@
 import { Button, Frog, TextInput } from '@airstack/frog'
+import { devtools } from '@airstack/frog/dev'
+import { serveStatic } from '@airstack/frog/serve-static'
 // import { neynar } from 'frog/hubs'
 import { handle } from 'frog/vercel'
 
@@ -63,6 +65,11 @@ app.frame('/', (c) => {
     ],
   })
 })
+
+// @ts-ignore
+const isEdgeFunction = typeof EdgeFunction !== 'undefined'
+const isProduction = isEdgeFunction || import.meta.env?.MODE !== 'development'
+devtools(app, isProduction ? { assetsPath: '/.frog' } : { serveStatic })
 
 export const GET = handle(app)
 export const POST = handle(app)

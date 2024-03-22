@@ -1,14 +1,14 @@
-import { farcasterIcon } from './icons.js'
+import { create } from 'qrcode'
+import { FarcasterIcon } from './Icons'
 
 export type QRCodeProps = {
   url: string
 }
 
-export async function QRCode(props: QRCodeProps) {
+export function QRCode(props: QRCodeProps) {
   const { url } = props
 
   // 1. Create QR code
-  const { create } = await import('qrcode')
   const arr = Array.prototype.slice.call(
     create(url, { errorCorrectionLevel: 'H' }).modules.data,
     0,
@@ -79,7 +79,7 @@ export async function QRCode(props: QRCodeProps) {
             const cy = j * cellSize + cellSize / 2
             const r = cellSize / 3
             const props = { cx, cy, r }
-            dots.push(<circle {...props} class="dark" />)
+            dots.push(<circle {...props} className="dark" />)
           }
         }
       }
@@ -91,11 +91,11 @@ export async function QRCode(props: QRCodeProps) {
 
   return (
     <div
-      class="border border-gray-100 p-3 w-fit"
+      className="border border-gray-100 p-3 w-fit"
       style={{ borderRadius: '1.5rem' }}
     >
       <div
-        class="relative"
+        className="relative"
         style={{
           height: `${size}px`,
           userSelect: 'none',
@@ -103,11 +103,11 @@ export async function QRCode(props: QRCodeProps) {
         }}
       >
         <div
-          class="flex items-center justify-center absolute"
+          className="flex items-center justify-center absolute"
           style={{ inset: '0' }}
         >
           <div
-            class="flex items-center justify-center rounded-lg"
+            className="flex items-center justify-center rounded-lg"
             style={{
               backgroundColor: '#7866BB',
               color: 'white',
@@ -115,7 +115,7 @@ export async function QRCode(props: QRCodeProps) {
               width: `${logoSize - logoMargin}px`,
             }}
           >
-            {farcasterIcon}
+            <FarcasterIcon />
           </div>
         </div>
 

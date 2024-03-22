@@ -1,4 +1,8 @@
 import { Button, Frog, TextInput } from '@airstack/frog'
+import { devtools } from '@airstack/frog/dev'
+import * as hubs from '@airstack/frog/hubs'
+import { serveStatic } from '@hono/node-server/serve-static'
+
 import { app as fontsApp } from './fonts.js'
 import { app as middlewareApp } from './middleware.js'
 import { app as neynarApp } from './neynar.js'
@@ -7,7 +11,6 @@ import { app as todoApp } from './todos.js'
 import { app as transactionApp } from './transaction.js'
 
 export const app = new Frog({
-  browserLocation: '/:path/dev',
   verify: 'silent',
   apiKey: process.env.AIRSTACK_API_KEY as string, // Replace 'YOUR_API_KEY_HERE' with your actual API key
 })
@@ -224,3 +227,5 @@ export const app = new Frog({
   .route('/routing', routingApp)
   .route('/transaction', transactionApp)
   .route('/todos', todoApp)
+
+devtools(app, { serveStatic })

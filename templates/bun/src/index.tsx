@@ -1,4 +1,7 @@
 import { Button, Frog, TextInput } from '@airstack/frog'
+import { devtools } from '@airstack/frog/dev'
+import { serveStatic } from '@airstack/frog/serve-static'
+
 // import { neynar } from 'frog/hubs'
 
 export const app = new Frog({
@@ -56,8 +59,10 @@ app.frame('/', (c) => {
   })
 })
 
+app.use('/*', serveStatic({ root: './public' }))
+devtools(app, { serveStatic })
+
 if (typeof Bun !== 'undefined') {
-  app.use('/*', (await import('hono/bun')).serveStatic({ root: './public' }))
   Bun.serve({
     fetch: app.fetch,
     port: 3000,

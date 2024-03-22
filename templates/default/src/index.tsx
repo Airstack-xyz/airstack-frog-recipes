@@ -1,6 +1,7 @@
 import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { Button, Frog, TextInput } from 'frog'
+import { devtools } from 'frog/dev'
 // import { neynar } from 'frog/hubs'
 
 export const app = new Frog({
@@ -59,3 +60,5 @@ app.frame('/', (c) => {
     ],
   })
 })
+
+devtools(app, { serveStatic })

@@ -1,8 +1,10 @@
 /** @jsxImportSource frog/jsx */
 
 import { Button, Frog, TextInput } from '@airstack/frog'
+import { devtools } from '@airstack/frog/dev'
 // import { neynar } from 'frog/hubs'
-import { handle } from 'frog/next'
+import { handle } from '@airstack/frog/next'
+import { serveStatic } from '@airstack/frog/serve-static'
 
 const app = new Frog({
   assetsPath: '/',
@@ -63,6 +65,8 @@ app.frame('/', (c) => {
     ],
   })
 })
+
+devtools(app, { serveStatic })
 
 export const GET = handle(app)
 export const POST = handle(app)

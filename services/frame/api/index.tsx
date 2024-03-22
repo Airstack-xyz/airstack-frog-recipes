@@ -1,5 +1,6 @@
-// import { serveStatic } from '@hono/node-server/serve-static'
 import { Button, Frog } from '@airstack/frog'
+import { devtools } from '@airstack/frog/dev'
+import { serveStatic } from '@airstack/frog/serve-static'
 import { handle } from 'frog/vercel'
 
 type State = {
@@ -18,13 +19,6 @@ export const app = new Frog<{ State: State }>({
     featureIndex: 0,
   },
 })
-
-// app.use(
-//   '/*',
-//   serveStatic({
-//     root: './public',
-//   }),
-// )
 
 app.frame('/', (c) => {
   return c.res({
@@ -80,6 +74,10 @@ app.frame('/end', (c) => {
     ],
   })
 })
+
+// @ts-ignore
+const isEdgeFunction = typeof EdgeRuntime !== 'undefined'
+devtools(app, isEdgeFunction ? { assetsPath: '/.frog' } : { serveStatic })
 
 export const GET = handle(app)
 export const POST = handle(app)
