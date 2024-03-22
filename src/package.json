@@ -62,7 +62,7 @@
     }
   },
   "dependencies": {
-    "@airstack/frames": "^1.0.18",
+    "@airstack/frames": "^1.0.20",
     "@bufbuild/protobuf": "^1.7.2",
     "@hono/vite-dev-server": "0.7.0",
     "@ngrok/ngrok": "^1.1.0",
@@ -87,7 +87,9 @@
     "type": "git",
     "url": "https://github.com/Airstack-xyz/airstack-frog-recipes"
   },
-  "authors": ["YosephKS"],
+  "authors": [
+    "YosephKS"
+  ],
   "keywords": [
     "eth",
     "ethereum",
