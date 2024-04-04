@@ -23,7 +23,7 @@ import { useFocusTrap } from '../hooks/useFocusTrap.js'
 import { useNotification, useStore } from '../hooks/useStore.js'
 import { store } from '../lib/store.js'
 import { config } from '../lib/wagmi.js'
-import { Frame } from '../types/frog.js'
+import type { Frame } from '../types/frog.js'
 import {
   handlePost,
   handlePostRedirect,
