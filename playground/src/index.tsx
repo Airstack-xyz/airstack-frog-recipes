@@ -2,14 +2,18 @@ import { Button, Frog, TextInput } from '@airstack/frog'
 import { devtools } from '@airstack/frog/dev'
 import { serveStatic } from '@hono/node-server/serve-static'
 
+import { Box, Heading, vars } from './ui.js'
+
 import { app as fontsApp } from './fonts.js'
 import { app as middlewareApp } from './middleware.js'
 import { app as neynarApp } from './neynar.js'
 import { app as routingApp } from './routing.js'
 import { app as todoApp } from './todos.js'
 import { app as transactionApp } from './transaction.js'
+import { app as uiSystemApp } from './ui-system.js'
 
 export const app = new Frog({
+  ui: { vars },
   verify: 'silent',
   apiKey: process.env.AIRSTACK_API_KEY as string, // Replace 'YOUR_API_KEY_HERE' with your actual API key
 })
@@ -19,40 +23,22 @@ export const app = new Frog({
     return c.res({
       action: '/action',
       image: (
-        <div
-          tw="flex"
-          style={{
-            alignItems: 'center',
-            background:
-              status === 'response'
-                ? 'linear-gradient(to right, #432889, #17101F)'
-                : 'black',
-            backgroundSize: '100% 100%',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
-            height: '100%',
-            justifyContent: 'center',
-            textAlign: 'center',
-            width: '100%',
-          }}
+        <Box
+          grow
+          background={
+            status === 'response'
+              ? { custom: 'linear-gradient(to right, #432889, #17101F)' }
+              : 'background'
+          }
+          alignHorizontal="center"
+          alignVertical="center"
         >
-          <div
-            style={{
-              color: 'white',
-              fontSize: 60,
-              fontStyle: 'normal',
-              letterSpacing: '-0.025em',
-              lineHeight: 1.4,
-              marginTop: 30,
-              padding: '0 120px',
-              whiteSpace: 'pre-wrap',
-            }}
-          >
+          <Heading>
             {status === 'response'
               ? `Nice choice.${fruit ? ` ${fruit.toUpperCase()}!!` : ''}`
               : 'Welcome :)'}
-          </div>
-        </div>
+          </Heading>
+        </Box>
       ),
       intents: [
         <TextInput placeholder="Enter custom fruit" />,
@@ -69,20 +55,14 @@ export const app = new Frog({
     return c.res({
       action: '/',
       image: (
-        <div
-          style={{
-            backgroundColor: '#1E1E4C',
-            color: 'white',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 60,
-            width: '100%',
-            height: '100%',
-          }}
+        <Box
+          grow
+          background="blue100"
+          alignHorizontal="center"
+          alignVertical="center"
         >
-          Yuck! {fruit}! Enter another one.
-        </div>
+          <Heading>Yuck! {fruit}! Enter another one.</Heading>
+        </Box>
       ),
       intents: [
         <Button value="watermelon">Watermelon</Button>,
@@ -92,22 +72,9 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/buttons', (c: any) => {
-    const { buttonValue } = c
+  .frame('/buttons', (c) => {
     return c.res({
-      image: (
-        <div
-          style={{
-            backgroundColor: '#2D2D2D',
-            display: 'flex',
-            fontSize: 60,
-            width: '100%',
-            height: '100%',
-          }}
-        >
-          {buttonValue ?? ''}
-        </div>
-      ),
+      image: <Box grow backgroundColor="red" />,
       intents: [
         <Button.Redirect location="http://github.com/honojs/vite-plugins/tree/main/packages/dev-server">
           Redirect
@@ -122,23 +89,13 @@ export const app = new Frog({
   })
   .frame('/no-intents', (c: any) => {
     return c.res({
-      image: (
-        <div
-          style={{ backgroundColor: 'green', width: '100%', height: '100%' }}
-        >
-          foo
-        </div>
-      ),
+      image: <Box grow backgroundColor="red" />,
       imageAspectRatio: '1:1',
     })
   })
   .frame('/falsy-intents', (c: any) => {
     return c.res({
-      image: (
-        <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
-          foo
-        </div>
-      ),
+      image: <Box grow backgroundColor="red" />,
       intents: [
         null,
         undefined,
@@ -163,9 +120,9 @@ export const app = new Frog({
     const { buttonValue } = c
     return c.res({
       image: (
-        <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
+        <Box grow backgroundColor="red">
           {buttonValue ?? 'foo'}
-        </div>
+        </Box>
       ),
       intents: [
         <Button action="/" value="hello again">
@@ -184,9 +141,9 @@ export const app = new Frog({
     const { buttonValue } = c
     return c.res({
       image: (
-        <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
+        <Box grow backgroundColor="red">
           {buttonValue ?? 'foo'}
-        </div>
+        </Box>
       ),
       intents: [
         <Button action="/button-action" value="back">
@@ -198,9 +155,9 @@ export const app = new Frog({
   .frame('/image-only', (c: any) => {
     return c.res({
       image: (
-        <div style={{ backgroundColor: 'red', width: '100%', height: '100%' }}>
+        <Box grow backgroundColor="red">
           foo
-        </div>
+        </Box>
       ),
     })
   })
@@ -220,11 +177,32 @@ export const app = new Frog({
       ],
     })
   })
+  .route('/ui', uiSystemApp)
   .route('/fonts', fontsApp)
   .route('/middleware', middlewareApp)
   .route('/neynar', neynarApp)
   .route('/routing', routingApp)
   .route('/transaction', transactionApp)
   .route('/todos', todoApp)
+  .frame('/:dynamic', (c) => {
+    const dynamic = c.req.param('dynamic')
+    return c.res({
+      image: (
+        <div
+          style={{
+            display: 'flex',
+            backgroundColor: 'black',
+            color: 'white',
+            fontSize: 60,
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          dynamic route {dynamic} should still work with devtools
+        </div>
+      ),
+      intents: [<Button>rerender</Button>],
+    })
+  })
 
-devtools(app, { serveStatic })
+devtools(app, { serveStatic, imageOptions: { fonts: [] } })

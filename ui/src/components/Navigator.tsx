@@ -29,7 +29,7 @@ import {
 } from '../utils/actions.js'
 import { formatUrl } from '../utils/format.js'
 import { AuthDialog } from './AuthDialog.js'
-import { FarcasterIcon } from './Icons.js'
+import { FarcasterIcon } from './logos.js'
 
 type NavigatorProps = { frameUrls: string[]; url: string }
 
@@ -318,6 +318,7 @@ function AddressBar(props: AddressBarProps) {
             className="bg-transparent font-sans text-gray-1000 px-2 w-full"
             data-1p-ignore
             placeholder="Enter address"
+            autoComplete="off"
             required
             style={{
               boxShadow: 'none',

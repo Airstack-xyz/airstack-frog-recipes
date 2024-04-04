@@ -1,4 +1,5 @@
-import type { ImageResponseOptions } from 'hono-og'
+import { type ImageResponseOptions } from 'hono-og'
+import type { Hash } from 'viem'
 import type { TypedResponse } from './response.js'
 
 export type Font = {
@@ -12,7 +13,7 @@ export type Font = {
 )
 
 export type ImageOptions = Omit<ImageResponseOptions, 'fonts'> & {
-  fonts: Font[]
+  fonts?: Font[] | undefined
 }
 
 export type FrameResponse = {
@@ -100,7 +101,7 @@ export type FrameResponse = {
    * @example
    * { width: 1200, height: 630 }
    */
-  imageOptions?: Omit<ImageOptions, 'fonts'> | undefined
+  imageOptions?: ImageOptions | undefined
   /**
    * Path or URI to the OG image.
    *
@@ -140,7 +141,7 @@ export type FrameData = {
   network: number
   state?: string | undefined
   timestamp: number
-  transactionId?: string | undefined
+  transactionId?: Hash | undefined
   url: string
 }
 

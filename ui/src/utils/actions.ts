@@ -4,29 +4,40 @@ import { client } from '../lib/api.js'
 import { store } from '../lib/store.js'
 import type { Data } from '../types/frog.js'
 
-export async function handlePost(button: {
-  index: number
-  target: string | undefined
-}) {
-  const { index, target } = button
+function getBody() {
   const { dataKey, dataMap, inputText, overrides, user } = store.getState()
   const frame = dataMap[dataKey].frame
+  return {
+    castId: {
+      fid: overrides.castFid,
+      hash: overrides.castHash,
+    },
+    fid: overrides.userFid !== user?.userFid ? overrides.userFid : user.userFid,
+    fromAddress: undefined,
+    inputText,
+    state: frame.state,
+    transactionId: undefined,
+  } as const
+}
 
+export async function handlePost(button: {
+  index: number
+  postUrl: string | undefined
+  transactionId?: string | undefined
+}) {
+  const { index, postUrl, transactionId } = button
+  const { dataKey, dataMap } = store.getState()
+  const frame = dataMap[dataKey].frame
+
+  const url = postUrl ?? frame.postUrl ?? dataMap[dataKey].url
   const json = await client.frames[':url'].action
     .$post({
-      param: { url: encodeURIComponent(target ?? frame.postUrl) },
+      param: { url: encodeURIComponent(url) },
       json: {
+        ...getBody(),
         buttonIndex: index,
-        castId: {
-          fid: overrides.castFid,
-          hash: overrides.castHash,
-        },
-        fid:
-          overrides.userFid !== user?.userFid
-            ? overrides.userFid
-            : user.userFid,
-        inputText,
-        state: frame.state,
+        transactionId,
+        sourceFrameId: dataKey,
       },
     })
     .then((response) => response.json())
@@ -37,7 +48,10 @@ export async function handlePost(button: {
     return {
       ...state,
       dataKey: id,
-      dataMap: { ...state.dataMap, [id]: json },
+      dataMap: {
+        ...state.dataMap,
+        [id]: json,
+      },
       inputText: '',
       logIndex: -1,
       logs: [...state.logs, id],
@@ -55,31 +69,28 @@ export async function handlePostRedirect(button: {
   target: string | undefined
 }) {
   const { index, target } = button
-  const { dataKey, dataMap, inputText, logs, overrides, user } =
-    store.getState()
-  const frame = dataMap[dataKey].frame
+  const { dataKey, dataMap } = store.getState()
 
+  const data = dataMap[dataKey]
+  const frame = data.frame
+  const sourceFrameId =
+    data.type === 'action' || data.type === 'initial'
+      ? dataKey
+      : data.sourceFrameId
+
+  const url = target ?? frame.postUrl ?? dataMap[sourceFrameId].url
   const json = await client.frames[':url'].redirect
     .$post({
-      param: { url: encodeURIComponent(target ?? frame.postUrl) },
+      param: { url: encodeURIComponent(url) },
       json: {
+        ...getBody(),
         buttonIndex: index,
-        castId: {
-          fid: overrides.castFid,
-          hash: overrides.castHash,
-        },
-        fid:
-          overrides.userFid !== user?.userFid
-            ? overrides.userFid
-            : user.userFid,
-        inputText,
-        state: frame.state,
+        sourceFrameId,
       },
     })
     .then((response) => response.json())
 
   const id = json.id
-  const previousData = dataMap[logs.at(-1) ?? dataKey]
   store.setState((state) => {
     const nextStackIndex = state.stackIndex + 1
     return {
@@ -89,8 +100,8 @@ export async function handlePostRedirect(button: {
         ...state.dataMap,
         [id]: {
           ...json,
-          context: previousData.context,
-          frame: previousData.frame,
+          context: data.context,
+          frame: data.frame,
         },
       },
       inputText: '',
@@ -107,6 +118,62 @@ export async function handlePostRedirect(button: {
   return json.response.location
 }
 
+export async function handleTransaction(button: {
+  fromAddress: string | undefined
+  index: number
+  target: string | undefined
+}) {
+  const { fromAddress, index, target } = button
+  const { dataKey, dataMap } = store.getState()
+
+  const data = dataMap[dataKey]
+  const frame = data.frame
+  const sourceFrameId =
+    data.type === 'action' || data.type === 'initial'
+      ? dataKey
+      : data.sourceFrameId
+
+  const url = target ?? frame.postUrl ?? dataMap[sourceFrameId].url
+  const json = await client.frames[':url'].tx
+    .$post({
+      param: { url: encodeURIComponent(url) },
+      json: {
+        ...getBody(),
+        fromAddress,
+        buttonIndex: index,
+        sourceFrameId,
+      },
+    })
+    .then((response) => response.json())
+
+  const id = json.id
+  store.setState((state) => {
+    const nextStackIndex = state.stackIndex + 1
+    return {
+      ...state,
+      dataKey: id,
+      dataMap: {
+        ...state.dataMap,
+        [id]: {
+          ...json,
+          context: data.context,
+          frame: data.frame,
+        },
+      },
+      inputText: '',
+      logIndex: -1,
+      logs: [...state.logs, id],
+      stack:
+        nextStackIndex < state.stack.length
+          ? [...state.stack.slice(0, nextStackIndex), id]
+          : [...state.stack, id],
+      stackIndex: nextStackIndex,
+    }
+  })
+
+  return json.response.data
+}
+
 export async function performAction(data: Data, previousData: Data) {
   const url = encodeURIComponent(data.url)
 
@@ -121,6 +188,14 @@ export async function performAction(data: Data, previousData: Data) {
         .then((response) => response.json())
     case 'redirect':
       return await client.frames[':url'].redirect
+        .$post({ param: { url }, json: data.body })
+        .then((response) => response.json())
+        .then((json) => {
+          const { context, frame } = previousData
+          return { context, frame, ...json }
+        })
+    case 'tx':
+      return await client.frames[':url'].tx
         .$post({ param: { url }, json: data.body })
         .then((response) => response.json())
         .then((json) => {
@@ -181,8 +256,12 @@ export async function handleReload(event: MouseEvent) {
 
   // reset to initial state
   if (event.shiftKey) {
+    const url =
+      data.type === 'action' || data.type === 'initial'
+        ? data.url
+        : dataMap[data.sourceFrameId].url
     const json = await client.frames[':url']
-      .$get({ param: { url: encodeURIComponent(data.url) } })
+      .$get({ param: { url: encodeURIComponent(url) } })
       .then((response) => response.json())
     const id = json.id
     store.setState((state) => ({

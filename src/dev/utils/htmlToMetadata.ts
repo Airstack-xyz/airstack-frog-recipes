@@ -11,7 +11,7 @@ import type { Frame } from '../types.js'
 import { parseButtons } from './parseButtons.js'
 
 export function htmlToMetadata(html: string) {
-  const dom = parseFromString(html.replace('<!DOCTYPE html>', ''))
+  const dom = parseFromString(html.replace(/<!doctype html>/i, ''))
   const nodes = dom.getElementsByTagName('meta')
 
   const metadata: FrameMetadata = []
@@ -59,7 +59,7 @@ export function htmlToMetadata(html: string) {
       input: properties['fc:frame:input:text']
         ? { text: properties['fc:frame:input:text'] }
         : undefined,
-      postUrl: properties['fc:frame:post_url'],
+      postUrl: properties['fc:frame:post_url'] as string | undefined,
       state: properties['fc:frame:state'],
       title: properties['og:title'],
       version: (properties['fc:frame'] as FrameVersion) ?? 'vNext',

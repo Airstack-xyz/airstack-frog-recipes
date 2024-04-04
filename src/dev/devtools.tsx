@@ -11,6 +11,7 @@ import type { FrogBase } from '../frog-base.js'
 import type { Env } from '../types/env.js'
 import type { Hub } from '../types/hub.js'
 import type { Pretty } from '../types/utils.js'
+import { getRequestUrl } from '../utils/getRequestUrl.js'
 import {
   type ApiRoutesOptions,
   type Bootstrap,
@@ -142,7 +143,7 @@ export function routes(
 
   app
     .get('/', async (c) => {
-      const { origin } = new URL(c.req.url)
+      const { origin } = getRequestUrl(c.req)
       const baseUrl = `${origin}${basePath}`
 
       let frameUrls: string[] = []
@@ -159,7 +160,8 @@ export function routes(
         }
 
         try {
-          initialData = (await getInitialData(frameUrl)) as Bootstrap['data']
+          if (frameUrl)
+            initialData = (await getInitialData(frameUrl)) as Bootstrap['data']
         } catch (error) {
           if (error instanceof HTTPException) throw error
         }
@@ -188,7 +190,7 @@ export function routes(
 
       return c.html(
         <>
-          {html`<!DOCTYPE html>`}
+          {html`<!doctype html>`}
           <html lang="en">
             <head>
               <meta charset="UTF-8" />

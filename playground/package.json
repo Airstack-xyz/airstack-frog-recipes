@@ -3,7 +3,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "node --import tsx ../src/cli/index.ts"
+    "dev": "node --import tsx ../src/cli/index.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@airstack/frog": "workspace:@airstack/frog@*",

@@ -13,7 +13,9 @@ import {
 import type { inspectRoutes } from 'hono/dev'
 import { HTTPException } from 'hono/http-exception'
 
+import { object, parse, union } from 'valibot'
 import type { Hub } from '../types/hub.js'
+import type { TransactionResponse } from '../types/transaction.js'
 import {
   defaultCookieOptions,
   defaultFid,
@@ -171,6 +173,44 @@ export function apiRoutes(
               status: response?.status ?? 500,
               statusText: response?.statusText ?? 'Internal Server Error',
             },
+        sourceFrameId: json.sourceFrameId,
+        url,
+      } as const)
+    })
+    .post('/frames/:url/tx', validator('json', postSchema), async (c) => {
+      const url = decodeURIComponent(c.req.param('url'))
+
+      const json = c.req.valid('json')
+      const fid = json.fid ?? c.var.fid ?? defaultFid
+      const body = { ...json, fid }
+
+      const { response, speed } = await fetchFrame({
+        body,
+        privateKey: c.var.keypair?.privateKey,
+        url,
+      })
+      // TODO: Handle errors
+      if (!response) throw new Error('Failed to fetch frame')
+
+      const data = (await response.json()) as TransactionResponse
+
+      return c.json({
+        id: uid(),
+        timestamp: Date.now(),
+        type: 'tx',
+        method: 'post',
+        body,
+        metrics: {
+          speed,
+        },
+        response: {
+          success: true,
+          data,
+          error: undefined,
+          status: response.status,
+          statusText: response.statusText,
+        },
+        sourceFrameId: json.sourceFrameId,
         url,
       } as const)
     })
@@ -238,6 +278,39 @@ export function apiRoutes(
       deleteCookie(c, 'user')
       return c.json({ success: true })
     })
+    .post(
+      '/debug/image/:url',
+      validator('json', union([object({}), postSchema])),
+      async (c) => {
+        const url = decodeURIComponent(c.req.param('url'))
+
+        let text: string | undefined
+        const body = await c.req.json()
+        const hasBody = Object.keys(body).length > 0
+        const headers = {
+          ...defaultHeaders,
+          Accept: 'text/html',
+        }
+        if (hasBody) {
+          const json = parse(postSchema, body)
+          const params = {
+            body: { ...json, fid: json.fid ?? c.var.fid ?? defaultFid },
+            headers,
+            privateKey: c.var.keypair?.privateKey,
+            url,
+          }
+          text = await fetchFrame(params)
+            .then((result) => result.response)
+            .then((response) => response?.text())
+        } else
+          text = await fetch(url, { headers }).then((response) =>
+            response.text(),
+          )
+
+        if (!text) throw new HTTPException(500, { message: 'Failed to fetch' })
+        return c.html(text)
+      },
+    )
 }
 
 export type ApiRoutes = ReturnType<typeof apiRoutes>
@@ -248,10 +321,13 @@ export type Data =
   | InferResponseType<Client['frames'][':url']['$get']>
   | InferResponseType<Client['frames'][':url']['action']['$post']>
   | (InferResponseType<Client['frames'][':url']['redirect']['$post']> &
-      Pick<
-        InferResponseType<Client['frames'][':url']['$get']>,
-        'context' | 'frame'
-      >)
+      BaseData)
+  | (InferResponseType<Client['frames'][':url']['tx']['$post']> & BaseData)
+
+type BaseData = Pick<
+  InferResponseType<Client['frames'][':url']['$get']>,
+  'context' | 'frame'
+>
 
 export type Bootstrap = {
   data: Data | undefined

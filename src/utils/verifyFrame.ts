@@ -5,7 +5,6 @@ import {
 } from '../protobufs/generated/message_pb.js'
 import type { FrameData, TrustedData } from '../types/frame.js'
 import type { Hub } from '../types/hub.js'
-import { parsePath } from './parsePath.js'
 
 export type VerifyFrameParameters = {
   frameUrl: string
@@ -38,7 +37,7 @@ export async function verifyFrame({
   if (!response.valid)
     throw new Error(`message is invalid. ${response.details}`)
 
-  if (!parsePath(url)?.startsWith(parsePath(frameUrl)))
+  if (new URL(url).origin !== new URL(frameUrl).origin)
     throw new Error(`Invalid frame url: ${frameUrl}. Expected: ${url}.`)
 
   const message = Message.fromBinary(body)

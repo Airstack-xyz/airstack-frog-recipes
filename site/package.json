@@ -9,10 +9,10 @@
   },
   "dependencies": {
     "@types/react": "latest",
-    "frog": "latest",
+    "@airstack/frog": "workspace:*",
     "react": "latest",
     "react-dom": "latest",
     "typescript": "latest",
-    "vocs": "1.0.0-alpha.43"
+    "vocs": "1.0.0-alpha.45"
   }
 }

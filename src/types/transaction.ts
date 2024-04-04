@@ -5,6 +5,7 @@ import type {
   GetValue,
   Hex,
 } from 'viem'
+
 import type { TypedResponse } from './response.js'
 import type { UnionWiden, Widen } from './utils.js'
 
@@ -15,18 +16,25 @@ export type ChainNamespace = 'eip155'
 
 /**
  * Current supported chain IDs:
+ * - 1: Ethereum
  * - 10: Optimism
  * - 8453: Base
+ * - 84532: Base Sepolia
  * - 7777777: Zora
  */
-export type ChainIdEip155 = 10 | 8453 | 84532 | 7777777
+export type ChainIdEip155 = 1 | 10 | 8453 | 84532 | 7777777
 
 export type TransactionParameters = {
   /** A CAIP-2 Chain ID to identify the transaction network. */
   chainId: `${ChainNamespace}:${ChainIdEip155}`
+  /** Includes client calldata attribution suffix */
+  attribution?: boolean | undefined
 } & EthSendTransactionSchema<bigint>
 
-export type TransactionResponse = Pick<TransactionParameters, 'chainId'> &
+export type TransactionResponse = Pick<
+  TransactionParameters,
+  'chainId' | 'attribution'
+> &
   EthSendTransactionSchema
 
 export type EthSendTransactionSchema<quantity = string> = {
@@ -39,6 +47,11 @@ export type EthSendTransactionSchema<quantity = string> = {
 export type EthSendTransactionParameters<quantity = string> = {
   /** Contract ABI. */
   abi?: Abi | undefined
+  /**
+   * Client calldata attribution suffix
+   * @default false
+   */
+  attribution?: boolean | undefined
   /** Transaction calldata. */
   data?: Hex | undefined
   /** Transaction target address. */
@@ -79,6 +92,8 @@ export type ContractTransactionParameters<
   abi: abi
   /** Contract function arguments. */
   args?: (abi extends Abi ? UnionWiden<args> : never) | allArgs | undefined
+  /** Includes client calldata attribution suffix */
+  attribution?: boolean | undefined
   /** Contract function name to invoke. */
   functionName:
     | allFunctionNames // show all options
