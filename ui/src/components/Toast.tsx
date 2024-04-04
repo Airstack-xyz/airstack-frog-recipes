@@ -1,5 +1,5 @@
 import { CheckIcon, Cross1Icon, Cross2Icon } from '@radix-ui/react-icons'
-import { State, store } from '../lib/store'
+import { type State, store } from '../lib/store'
 import { Spinner } from './Spinner.js'
 
 type ToastProps = NonNullable<State['notification']>
