@@ -1,4 +1,4 @@
-import { createSystem } from 'frog/ui'
+import { createSystem } from '@airstack/frog/ui'
 
 export const {
   Box,

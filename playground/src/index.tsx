@@ -205,4 +205,4 @@ export const app = new Frog({
     })
   })
 
-devtools(app, { serveStatic, imageOptions: { fonts: [] } })
+devtools(app, { serveStatic })

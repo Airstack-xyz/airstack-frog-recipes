@@ -1,5 +1,5 @@
-import { Button, Frog } from 'frog'
-import { serveStatic } from 'frog/serve-static'
+import { Button, Frog } from '@airstack/frog'
+import { serveStatic } from '@airstack/frog/serve-static'
 
 import {
   Box,
@@ -19,10 +19,11 @@ import {
 } from './ui.js'
 
 export const app = new Frog({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   ui: { vars },
 })
   .use('/*', serveStatic({ root: './public' }))
-  .frame('/', (c) => {
+  .frame('/', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="32">
@@ -46,7 +47,7 @@ export const app = new Frog({
       intents: [<Button action="/columns">→</Button>],
     })
   })
-  .frame('/columns', (c) => {
+  .frame('/columns', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -79,7 +80,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/divider', (c) => {
+  .frame('/divider', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -113,7 +114,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/heading', (c) => {
+  .frame('/heading', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -135,7 +136,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/hstack', (c) => {
+  .frame('/hstack', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -174,7 +175,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/icon', (c) => {
+  .frame('/icon', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -213,7 +214,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/image_', (c) => {
+  .frame('/image_', (c: any) => {
     return c.res({
       image: (
         <Box
@@ -239,7 +240,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/rows', (c) => {
+  .frame('/rows', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -272,7 +273,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/spacer', (c) => {
+  .frame('/spacer', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -305,7 +306,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/text', (c) => {
+  .frame('/text', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">
@@ -332,7 +333,7 @@ export const app = new Frog({
       ],
     })
   })
-  .frame('/vstack', (c) => {
+  .frame('/vstack', (c: any) => {
     return c.res({
       image: (
         <Box backgroundColor="background" grow padding="24">

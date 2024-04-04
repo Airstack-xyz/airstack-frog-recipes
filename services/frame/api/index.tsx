@@ -12,6 +12,7 @@ export const config = {
 }
 
 export const app = new Frog<{ State: State }>({
+  apiKey: process.env.AIRSTACK_API_KEY as string,
   assetsPath: '/',
   basePath: '/api',
   browserLocation: 'https://frog.fm',
