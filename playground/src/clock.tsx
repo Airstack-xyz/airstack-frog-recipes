@@ -1,7 +1,8 @@
-import { Frog } from 'frog'
+import { Frog } from '@airstack/frog'
 import { Heading, VStack, vars } from './ui.js'
 
 export const app = new Frog({
+  apiKey: process.env.APP_AIRSTACK_API_KEY as string,
   ui: { vars },
   headers: { 'cache-control': 'max-age=0' },
 }).frame('/', (c) => {

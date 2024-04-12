@@ -1,7 +1,9 @@
-import { Frog } from 'frog'
-import { Button } from 'frog'
+import { Frog } from '@airstack/frog'
+import { Button } from '@airstack/frog'
 
-export const app = new Frog()
+export const app = new Frog({
+  apiKey: process.env.APP_AIRSTACK_API_KEY as string,
+})
   .frame('/', (c) =>
     c.res({
       image: (
