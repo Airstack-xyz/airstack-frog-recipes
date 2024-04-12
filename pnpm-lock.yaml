@@ -242,7 +242,7 @@ importers:
     dependencies:
       frog:
         specifier: latest
-        version: link:../../src
+        version: 0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3)
       hono:
         specifier: 4.1.0
         version: 4.1.0
@@ -258,7 +258,7 @@ importers:
     dependencies:
       frog:
         specifier: latest
-        version: link:../../src
+        version: 0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3)
       hono:
         specifier: 4.1.0
         version: 4.1.0
@@ -277,7 +277,7 @@ importers:
         version: 1.8.2
       frog:
         specifier: latest
-        version: link:../../src
+        version: 0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3)
       hono:
         specifier: 4.1.0
         version: 4.1.0
@@ -290,7 +290,7 @@ importers:
     dependencies:
       frog:
         specifier: latest
-        version: link:../../src
+        version: 0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3)
       hono:
         specifier: 4.1.0
         version: 4.1.0
@@ -327,7 +327,7 @@ importers:
         version: 1.8.2
       frog:
         specifier: latest
-        version: link:../../src
+        version: 0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3)
       hono:
         specifier: 4.1.0
         version: 4.1.0
@@ -343,7 +343,7 @@ importers:
     dependencies:
       frog:
         specifier: latest
-        version: link:../../src
+        version: 0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3)
       hono:
         specifier: 4.1.0
         version: 4.1.0
@@ -2113,7 +2113,6 @@ packages:
   /@hono/node-server@1.8.2:
     resolution: {integrity: sha512-h8l2TBLCPHZBUrrkosZ6L5CpBLj6zdESyF4B+zngiCDF7aZFQJ0alVbLx7jn8PCVi9EyoFf8a4hOZFi1tD95EA==}
     engines: {node: '>=18.14.1'}
-    dev: false
 
   /@hono/node-server@1.9.1:
     resolution: {integrity: sha512-XBru0xbtRlTZJyAiFJLn7XDKbCVXBaRhVQAQhB9TwND2gwj8jf9SDWIj/7VxVtNAjURJf7Ofcz58DRA6DPYiWA==}
@@ -7666,6 +7665,53 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
+  /frog@0.5.6(@types/node@20.11.26)(hono@4.1.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-bEat2ZxKYZDbafe+BS4qIBFQ2n9l8oG9Hg9o/pG8EYLU0aQ4pmioBhoCyDC+0lkLeBLBwFcowGpfKdPlgqFcfw==}
+    hasBin: true
+    peerDependencies:
+      hono: 4.1.0
+      typescript: 5.3.3
+    peerDependenciesMeta:
+      typescript:
+        optional: true
+    dependencies:
+      '@bufbuild/protobuf': 1.7.2
+      '@hono/vite-dev-server': 0.7.0(hono@4.1.0)
+      '@ngrok/ngrok': 1.1.1
+      '@noble/curves': 1.3.0
+      '@noble/hashes': 1.3.3
+      cac: 6.7.14
+      detect-browser: 5.3.0
+      dom-parser: 1.1.5
+      fast-glob: 3.3.2
+      fs-extra: 11.2.0
+      hono: 4.1.0
+      hono-og: 0.0.22(hono@4.1.0)
+      jose: 5.2.3
+      lz-string: 1.5.0
+      path-browserify: 1.0.1
+      qrcode: 1.5.3
+      typescript: 5.3.3
+      viem: 2.8.4(typescript@5.3.3)
+      vite: 5.1.6(@types/node@20.11.26)
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - utf-8-validate
+      - zod
+    dev: false
+
+  /fs-constants@1.0.0:
+    resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
+    dev: false
+
   /fs-extra@11.1.0:
     resolution: {integrity: sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==}
     engines: {node: '>=14.14'}
@@ -8170,6 +8216,17 @@ packages:
     dependencies:
       react-is: 16.13.1
     dev: true
+
+  /hono-og@0.0.22(hono@4.1.0):
+    resolution: {integrity: sha512-fq04Nhhbtyto4WL8r9+ozUB9e0PKUD/G+bdI7+NkU7+H4ZqkiTjTSAg94FDq1Kdz9Bql4ZaqyOkGo7cmVFo84g==}
+    peerDependencies:
+      hono: 4.1.0
+    dependencies:
+      '@vercel/og': 0.6.2
+      '@wevm/vercel-og': 0.6.12
+      hono: 4.1.0
+      workers-og: 0.0.23
+    dev: false
 
   /hono-og@0.0.27(hono@4.1.0):
     resolution: {integrity: sha512-FtsUmDCG7xKXD8InxzHcdzX5IIe9MrDPFHih0CUd6Hog0NcDV6tksc1cZ1sAAuftSTedmC4LV6Oi1uK6VXvZgQ==}
