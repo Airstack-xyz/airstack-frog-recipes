@@ -181,8 +181,8 @@ importers:
   src:
     dependencies:
       '@airstack/frames':
-        specifier: ^1.1.1
-        version: 1.1.1(typescript@5.3.3)
+        specifier: ^1.1.4
+        version: 1.1.4(typescript@5.3.3)
       '@bufbuild/protobuf':
         specifier: ^1.7.2
         version: 1.7.2
@@ -438,11 +438,10 @@ packages:
   /@adraffy/ens-normalize@1.10.0:
     resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
 
-  /@airstack/frames@1.1.1(typescript@5.3.3):
-    resolution: {integrity: sha512-mtEsJWRfc6wh+GaWwFHUokj/gdYM9JNTms1B5DieD/TTr8M48xLEw90TIMbDwnVGtz6O72TvAoLaKmSdo5TH9A==}
-    engines: {node: 20.x}
+  /@airstack/frames@1.1.4(typescript@5.3.3):
+    resolution: {integrity: sha512-foMwOAMipkRQK7cDTeWxpmb3vwEiPZRRhtGGuuAUQropMp4fCIDpbloXakTJFiVoMPnYpfYIpHH/SkDKguZalQ==}
     dependencies:
-      '@airstack/node': 0.0.5
+      '@airstack/node': 0.0.6
       '@bufbuild/buf': 1.30.0
       '@bufbuild/protobuf': 1.8.0
       '@bufbuild/protoc-gen-es': 1.8.0(@bufbuild/protobuf@1.8.0)
@@ -469,8 +468,8 @@ packages:
       - zod
     dev: false
 
-  /@airstack/node@0.0.5:
-    resolution: {integrity: sha512-bvRE2AaIxLPB4oX3VJe8lA1kXVGNuYt9T9KJngOxxx+6E7zxne5FDMjB//ngTvxm+UqCmAF3rkoVJXx/HN0ExQ==}
+  /@airstack/node@0.0.6:
+    resolution: {integrity: sha512-bx/z4XiEnm6XCFOuXxRsD8kgMrGlI7IBHh9jmvBaiGkpTnmtjpY6aQV0CPYOkDq3diDebHh1gXNYZ0eLidfdlw==}
     engines: {node: '>=14.17.0'}
     dependencies:
       '@types/node': 14.14.30
