@@ -29,6 +29,9 @@ export const app = new Frog({
             <Button.Transaction target="/send">
               Send Transaction
             </Button.Transaction>,
+            <Button.Transaction target="/error">
+              Invoke Error
+            </Button.Transaction>,
             <Button.Transaction target="/mint">Mint</Button.Transaction>,
           ],
     })
@@ -59,6 +62,8 @@ export const app = new Frog({
       ],
     })
   })
+  // Custom error
+  .transaction('/error', (c) => c.error({ message: 'bad transaction' }))
   // Raw Transaction
   .transaction('/raw-send', (c) => {
     return c.res({
