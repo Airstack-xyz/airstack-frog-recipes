@@ -43,7 +43,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate Icons
-        uses: rimraf src/ui/icons.ts && pnpm gen:icons
+        run: rimraf src/ui/icons.ts && pnpm gen:icons
 
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
