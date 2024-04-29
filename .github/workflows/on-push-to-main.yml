@@ -10,7 +10,7 @@ concurrency:
 jobs:
   verify:
     name: Verify
-    uses: ./.github/workflows/verify.yml
+    uses: Airstack-xyz/airstack-frog-recipes/.github/workflows/verify.yml@main
     secrets: inherit
 
   changesets:
