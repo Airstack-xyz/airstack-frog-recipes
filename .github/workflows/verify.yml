@@ -42,11 +42,11 @@ jobs:
       - name: Clone repository
         uses: actions/checkout@v4
 
-      - name: Generate Icons
-        run: rimraf src/ui/icons.ts && pnpm gen:icons
-
       - name: Install dependencies
         uses: ./.github/actions/install-dependencies
+
+      - name: Generate Icons
+        run: rimraf src/ui/icons.ts && pnpm gen:icons
 
       - name: Build
         run: pnpm build
