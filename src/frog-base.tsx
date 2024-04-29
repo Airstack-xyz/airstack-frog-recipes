@@ -18,6 +18,7 @@ import type {
   ImageOptions,
 } from './types/frame.js'
 import type { Hub } from './types/hub.js'
+import type { Octicon } from './types/octicon.js'
 import type {
   CastActionHandler,
   FrameHandler,
@@ -30,7 +31,6 @@ import { fromQuery } from './utils/fromQuery.js'
 import { getButtonValues } from './utils/getButtonValues.js'
 import { getCastActionContext } from './utils/getCastActionContext.js'
 import { getFrameContext } from './utils/getFrameContext.js'
-import { getFrameMetadata } from './utils/getFrameMetadata.js'
 import { getImagePaths } from './utils/getImagePaths.js'
 import { getRequestUrl } from './utils/getRequestUrl.js'
 import { getRouteParameters } from './utils/getRouteParameters.js'
@@ -174,9 +174,22 @@ export type FrogConstructorParameters<
   verify?: boolean | 'silent' | undefined
 }
 
-export type RouteOptions = Pick<FrogConstructorParameters, 'verify'> & {
-  fonts?: ImageOptions['fonts'] | (() => Promise<ImageOptions['fonts']>)
-}
+export type RouteOptions<method extends string = string> = Pick<
+  FrogConstructorParameters,
+  'verify'
+> &
+  (method extends 'frame'
+    ? {
+        fonts?: ImageOptions['fonts'] | (() => Promise<ImageOptions['fonts']>)
+      }
+    : method extends 'castAction'
+      ? {
+          name: string
+          icon: Octicon
+          description?: string
+          aboutUrl?: string
+        }
+      : {})
 
 /**
  * A Frog instance.
@@ -294,6 +307,8 @@ export class FrogBase<
     if (typeof verify !== 'undefined') this.verify = verify
 
     this.basePath = basePath ?? '/'
+    // @ts-ignore - private
+    this.initialBasePath = this.basePath
     this.assetsPath = assetsPath ?? this.basePath
     this.fetch = this.hono.fetch.bind(this.hono)
     this.get = this.hono.get.bind(this.hono)
@@ -315,18 +330,33 @@ export class FrogBase<
     })
   }
 
-  castAction: HandlerInterface<env, 'cast-action', schema, basePath> = (
+  castAction: HandlerInterface<env, 'castAction', schema, basePath> = (
     ...parameters: any[]
   ) => {
-    const [path, middlewares, handler, options = {}] = getRouteParameters<
+    const [path, middlewares, handler, options] = getRouteParameters<
       env,
-      CastActionHandler<env>
+      CastActionHandler<env>,
+      'castAction'
     >(...parameters)
 
-    const { verify = this.verify } = options
+    const { verify = this.verify, ...installParameters } = options
 
-    // Cast Action Route (implements POST).
-    this.hono.post(parseHonoPath(path), ...middlewares, async (c) => {
+    // Cast Action Route (implements GET and POST).
+    this.hono.use(parseHonoPath(path), ...middlewares, async (c) => {
+      const url = getRequestUrl(c.req)
+      const origin = this.origin ?? url.origin
+      const baseUrl = origin + parsePath(this.basePath)
+
+      if (c.req.method === 'GET') {
+        return c.json({
+          ...installParameters,
+          postUrl: baseUrl + parsePath(path),
+          action: {
+            type: 'post',
+          },
+        })
+      }
+
       const { context } = getCastActionContext<env, string>({
         context: await requestBodyToContext(c, {
           hub:
@@ -361,7 +391,8 @@ export class FrogBase<
   ) => {
     const [path, middlewares, handler, options = {}] = getRouteParameters<
       env,
-      FrameHandler<env>
+      FrameHandler<env>,
+      'frame'
     >(...parameters)
 
     const { verify = this.verify } = options
@@ -370,25 +401,6 @@ export class FrogBase<
     const imagePaths = getImagePaths(parseHonoPath(path))
     for (const imagePath of imagePaths) {
       this.hono.get(imagePath, async (c) => {
-        const url = getRequestUrl(c.req)
-
-        const query = c.req.query()
-        if (!query.image) {
-          // If the query is doesn't have an image, it is an initial request to a frame.
-          // Therefore we need to get the link to fetch the original image and jump once again in this method to resolve the options,
-          // but now with query params set.
-          const metadata = await getFrameMetadata(url.href.slice(0, -6)) // Stripping `/image` (6 characters) from the end of the url.
-          const frogImage = metadata.find(
-            ({ property }) => property === 'frog:image',
-          )
-          if (!frogImage)
-            throw new Error(
-              'Unexpected error: frog:image meta tag is not present in the frame.',
-            )
-          // Redirect to this route but now with search params and return the response
-          return c.redirect(frogImage.content)
-        }
-
         const defaultImageOptions = await (async () => {
           if (typeof this.imageOptions === 'function')
             return await this.imageOptions()
@@ -407,7 +419,7 @@ export class FrogBase<
           headers = this.headers,
           image,
           imageOptions = defaultImageOptions,
-        } = fromQuery<any>(query)
+        } = fromQuery<any>(c.req.query())
         const image_ = JSON.parse(lz.decompressFromEncodedURIComponent(image))
         return new ImageResponse(image_, {
           width: 1200,
@@ -426,6 +438,12 @@ export class FrogBase<
       const origin = this.origin ?? url.origin
       const assetsUrl = origin + parsePath(this.assetsPath)
       const baseUrl = origin + parsePath(this.basePath)
+      const initialBaseUrl =
+        origin +
+        parsePath(
+          // @ts-ignore - private
+          this.initialBasePath,
+        )
 
       const { context, getState } = getFrameContext<env, string>({
         context: await requestBodyToContext(c, {
@@ -459,7 +477,13 @@ export class FrogBase<
         ogImage,
         title = 'Frog Frame',
       } = response.data
-      const buttonValues = getButtonValues(parseIntents(intents))
+
+      const buttonValues = getButtonValues(
+        parseIntents(intents, {
+          baseUrl,
+          initialBaseUrl,
+        }),
+      )
 
       if (context.status === 'redirect' && context.buttonIndex) {
         const buttonValue = buttonValues[context.buttonIndex - 1]
@@ -575,10 +599,14 @@ export class FrogBase<
       const postUrl = (() => {
         if (!action) return context.url
         if (action.startsWith('http')) return action
+        if (action.startsWith('~'))
+          return initialBaseUrl + parsePath(action.slice(1))
+
         return baseUrl + parsePath(action)
       })()
 
       const parsedIntents = parseIntents(intents, {
+        initialBaseUrl,
         baseUrl,
         search:
           context.status === 'initial'
@@ -690,22 +718,8 @@ export class FrogBase<
                 property="fc:frame:image:aspect_ratio"
                 content={imageAspectRatio}
               />
-              <meta
-                property="fc:frame:image"
-                content={
-                  context.status === 'initial'
-                    ? `${context.url}/image`
-                    : imageUrl
-                }
-              />
-              <meta
-                property="og:image"
-                content={
-                  ogImageUrl ?? context.status === 'initial'
-                    ? `${context.url}/image`
-                    : imageUrl
-                }
-              />
+              <meta property="fc:frame:image" content={imageUrl} />
+              <meta property="og:image" content={ogImageUrl ?? imageUrl} />
               <meta property="og:title" content={title} />
               <meta
                 property="fc:frame:post_url"
@@ -739,7 +753,6 @@ export class FrogBase<
                   })}
                 />
               )}
-              <meta property="frog:image" content={imageUrl} />
             </head>
             <body />
           </html>
@@ -756,8 +769,11 @@ export class FrogBase<
     subBasePath extends string,
   >(path: subPath, frog: FrogBase<any, subSchema, subBasePath>) {
     if (frog.assetsPath === '/') frog.assetsPath = this.assetsPath
-    if (frog.basePath === '/')
+    if (frog.basePath === '/') {
+      // @ts-ignore - private
+      frog.initialBasePath = this.initialBasePath ?? parsePath(this.basePath)
       frog.basePath = parsePath(this.basePath) + parsePath(path)
+    }
     if (!frog.browserLocation) frog.browserLocation = this.browserLocation
     if (!frog.dev) frog.dev = this.dev
     if (!frog.headers) frog.headers = this.headers
@@ -779,7 +795,8 @@ export class FrogBase<
   ) => {
     const [path, middlewares, handler, options = {}] = getRouteParameters<
       env,
-      TransactionHandler<env>
+      TransactionHandler<env>,
+      'transaction'
     >(...parameters)
 
     const { verify = this.verify } = options
