@@ -46,7 +46,7 @@ jobs:
         uses: ./.github/actions/install-dependencies
 
       - name: Generate Icons
-        run: rimraf src/ui/icons.ts && pnpm gen:icons
+        run: pnpm clean:icons && pnpm gen:icons
 
       - name: Build
         run: pnpm build
