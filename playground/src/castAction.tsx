@@ -1,8 +1,10 @@
-import { Frog } from '@airstack/frog'
-import { Button } from '@airstack/frog'
+import { Button, Frog, TextInput } from '@airstack/frog'
+
+import { Box, Heading, vars } from './ui.js'
 
 export const app = new Frog({
   apiKey: process.env.APP_AIRSTACK_API_KEY as string,
+  ui: { vars },
 })
   .frame('/', (c) =>
     c.res({
@@ -38,12 +40,17 @@ export const app = new Frog({
         </div>
       ),
       intents: [
-        <Button.AddCastAction action="/action">Add</Button.AddCastAction>,
+        <Button.AddCastAction action="/action-message">
+          Message
+        </Button.AddCastAction>,
+        <Button.AddCastAction action="/action-frame">
+          Frame
+        </Button.AddCastAction>,
       ],
     }),
   )
   .castAction(
-    '/action',
+    '/action-message',
     async (c) => {
       console.log(
         `Cast Action to ${JSON.stringify(c.actionData.castId)} from ${
@@ -51,11 +58,63 @@ export const app = new Frog({
         }`,
       )
       if (Math.random() > 0.5) return c.error({ message: 'Action failed :(' })
-      return c.res({ message: 'Action Succeeded' })
+      return c.message({ message: 'Action Succeeded' })
     },
     {
       name: 'Log This!',
       icon: 'log',
-      description: 'This cast action will log something!',
+      description: 'This cast action will log something and return a message!',
     },
   )
+  .castAction(
+    '/action-frame',
+    async (c) => {
+      console.log(
+        `Cast Action to ${JSON.stringify(c.actionData.castId)} from ${
+          c.actionData.fid
+        }`,
+      )
+      if (Math.random() > 0.5) return c.error({ message: 'Action failed :(' })
+
+      return c.frame({
+        path: '/action-frame-response',
+      })
+    },
+    {
+      name: 'Log This!',
+      icon: 'log',
+      description: 'This cast action will log something and invoke a frame!',
+    },
+  )
+  .frame('/action-frame-response', async (c) => {
+    const { buttonValue, inputText, status } = c
+    const fruit = inputText || buttonValue
+    return c.res({
+      action: '/action',
+      image: (
+        <Box
+          grow
+          background={
+            status === 'response'
+              ? { custom: 'linear-gradient(to right, #432889, #17101F)' }
+              : 'background'
+          }
+          alignHorizontal="center"
+          alignVertical="center"
+        >
+          <Heading style="italic">
+            {status === 'response'
+              ? `Nice choice.${fruit ? ` ${fruit.toUpperCase()}!!` : ''}`
+              : 'Cast Action Frame Response 🐸'}
+          </Heading>
+        </Box>
+      ),
+      intents: [
+        <TextInput placeholder="Enter custom fruit" />,
+        <Button value="apples">Apples</Button>,
+        <Button value="oranges">Oranges</Button>,
+        <Button value="bananas">Bananas</Button>,
+        status === 'response' && <Button.Reset>Reset</Button.Reset>,
+      ],
+    })
+  })
