@@ -1,7 +1,7 @@
 import { Button, Frog } from '@airstack/frog'
 import { devtools } from '@airstack/frog/dev'
 import { serveStatic } from '@airstack/frog/serve-static'
-import { handle } from 'frog/vercel'
+import { handle } from '@airstack/frog/vercel'
 
 type State = {
   featureIndex: number
