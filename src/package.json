@@ -1,7 +1,7 @@
 {
   "name": "@airstack/frog",
   "description": "Airstack Flavour 🐸 Framework for Farcaster Frames",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "type": "module",
   "module": "_lib/index.js",
   "types": "_lib/index.d.ts",
