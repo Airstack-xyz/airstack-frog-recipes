@@ -172,6 +172,11 @@ export type FrogConstructorParameters<
    * @default true.
    */
   verify?: boolean | 'silent' | undefined
+
+  /**
+   * Additional meta tags for the instance.
+   */
+  unstable_metaTags?: { property: string; content: string }[] | undefined
 }
 
 export type RouteOptions<method extends string = string> = Pick<
@@ -264,11 +269,17 @@ export class FrogBase<
   /** Whether or not frames should be verified. */
   verify: FrogConstructorParameters['verify'] = true
 
+  metaTags: FrogConstructorParameters['unstable_metaTags'] | undefined
+
   _dev: string | undefined
   version = version
 
   constructor(
-    {
+    parameters: FrogConstructorParameters<env, basePath, _state> = {
+      apiKey: '',
+    },
+  ) {
+    const {
       apiKey,
       assetsPath,
       basePath,
@@ -284,9 +295,10 @@ export class FrogBase<
       origin,
       secret,
       ui,
+      unstable_metaTags,
       verify,
-    }: FrogConstructorParameters<env, basePath, _state> = { apiKey: '' },
-  ) {
+    } = parameters
+
     this.hono = new Hono<env, schema, basePath>(honoOptions)
     this.hub =
       process.env.NODE_ENV === 'production'
@@ -301,6 +313,7 @@ export class FrogBase<
     if (hubApiUrl) this.hubApiUrl = hubApiUrl
     if (imageAspectRatio) this.imageAspectRatio = imageAspectRatio
     if (imageOptions) this.imageOptions = imageOptions
+    if (unstable_metaTags) this.metaTags = unstable_metaTags
     if (origin) this.origin = origin
     if (secret) this.secret = secret
     if (ui) this.ui = ui
@@ -347,7 +360,7 @@ export class FrogBase<
       const origin = this.origin ?? url.origin
       const baseUrl = origin + parsePath(this.basePath)
 
-      if (c.req.method === 'GET') {
+      if (c.req.method === 'GET')
         return c.json({
           ...installParameters,
           postUrl: baseUrl + parsePath(path),
@@ -355,7 +368,6 @@ export class FrogBase<
             type: 'post',
           },
         })
-      }
 
       const { context } = getCastActionContext<env, string>({
         context: await requestBodyToContext(c, {
@@ -384,9 +396,8 @@ export class FrogBase<
         })
       }
 
-      const { message } = response.data
-
-      return c.json({ message, type: 'message' })
+      const { message, link } = response.data
+      return c.json({ message, link, type: 'message' })
     })
 
     return this
@@ -714,6 +725,22 @@ export class FrogBase<
         )
       }
 
+      const metaTagsMap = new Map<string, string>()
+      for (const tag of [
+        ...(response.data.unstable_metaTags ?? []),
+        ...(this.metaTags ?? []),
+      ]) {
+        if (metaTagsMap.has(tag.property)) continue
+        metaTagsMap.set(tag.property, tag.content)
+      }
+      const metaTags =
+        metaTagsMap.size === 0
+          ? []
+          : Array.from(metaTagsMap).map((x) => ({
+              property: x[0],
+              content: x[1],
+            }))
+
       return c.render(
         <>
           {html`<!DOCTYPE html>`}
@@ -759,6 +786,10 @@ export class FrogBase<
                   })}
                 />
               )}
+
+              {metaTags.map((tag) => (
+                <meta property={tag.property} content={tag.content} />
+              ))}
             </head>
             <body />
           </html>
