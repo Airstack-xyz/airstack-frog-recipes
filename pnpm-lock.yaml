@@ -181,8 +181,8 @@ importers:
   src:
     dependencies:
       '@airstack/frames':
-        specifier: ^1.1.5
-        version: 1.1.5(typescript@5.3.3)
+        specifier: ^1.1.6
+        version: 1.1.6(typescript@5.3.3)
       '@bufbuild/protobuf':
         specifier: ^1.7.2
         version: 1.7.2
@@ -438,8 +438,8 @@ packages:
   /@adraffy/ens-normalize@1.10.0:
     resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
 
-  /@airstack/frames@1.1.5(typescript@5.3.3):
-    resolution: {integrity: sha512-HzhVuyYsY5OM4EigMF7yfAif1NtAHxGaxBio7/pXeOw7jVaFRqasF+jniV93VACx71xzSpLVVHIA/S846ZmyIA==}
+  /@airstack/frames@1.1.6(typescript@5.3.3):
+    resolution: {integrity: sha512-Ey1B8StVzDqrTzaT01unYErxvPcIzLZ8KXGDEI9pUn+8TurCayWBRUCtkljEF1PgkGedUjwt+pYyAG3CsjY5yQ==}
     dependencies:
       '@airstack/node': 0.0.6
       '@bufbuild/buf': 1.31.0
