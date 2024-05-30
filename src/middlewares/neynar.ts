@@ -1,6 +1,12 @@
 import type { MiddlewareHandler } from 'hono'
 import { hexToBytes } from 'viem'
+
+import {
+  type NeynarHubParameters,
+  neynar as neynarHub,
+} from '../hubs/neynar.js'
 import { Message } from '../protobufs/generated/message_pb.js'
+import type { Hub } from '../types/hub.js'
 import type { Pretty } from '../types/utils.js'
 import { messageToFrameData } from '../utils/verifyFrame.js'
 
@@ -23,8 +29,8 @@ export type NeynarMiddlewareParameters = {
   /**
    * Set of features to enable and inject into context.
    *
-   * - `interactor`: Fetches the user who interacted with the frame.
-   * - `cast`: Fetches the cast of the frame.
+   * - `'interactor'`: Fetches the user who interacted with the frame.
+   * - `'cast'`: Fetches the cast of the frame.
    */
   features: ('interactor' | 'cast')[]
 }
@@ -182,5 +188,35 @@ export type NeynarUser = {
   viewerContext?: {
     following: boolean
     followedBy: boolean
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////
+// Higher-Level API
+
+export type CreateNeynarParameters = {
+  apiKey: string
+}
+
+export type CreateNeynarReturnType = {
+  hub: (parameters?: Pretty<Omit<NeynarHubParameters, 'apiKey'>>) => Hub
+  middleware: (
+    parameters: Pretty<Omit<NeynarMiddlewareParameters, 'apiKey'>>,
+  ) => MiddlewareHandler<{
+    Variables: NeynarVariables
+  }>
+}
+
+export function createNeynar(
+  parameters: CreateNeynarParameters,
+): CreateNeynarReturnType {
+  const { apiKey } = parameters
+  return {
+    hub(parameters = {}) {
+      return neynarHub({ ...parameters, apiKey })
+    },
+    middleware(parameters) {
+      return neynar({ ...parameters, apiKey })
+    },
   }
 }

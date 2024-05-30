@@ -1,6 +1,7 @@
 import type { ImageResponseOptions } from 'hono-og'
 import type { Hash } from 'viem'
 import type { TypedResponse } from './response.js'
+import type { Pretty } from './utils.js'
 
 export type Font = {
   name: string
@@ -12,7 +13,10 @@ export type Font = {
   | { source: 'google' }
 )
 
-export type ImageOptions = Omit<ImageResponseOptions, 'fonts'> & {
+export type ImageOptions = Omit<
+  ImageResponseOptions,
+  'fonts' | 'tailwindConfig'
+> & {
   fonts?: Font[] | undefined
 }
 
@@ -78,30 +82,11 @@ export type FrameResponse = {
    */
   headers?: Record<string, string> | undefined
   /**
-   * The OG Image to render for the frame. Can either be a JSX element, or URL.
-   *
-   * @example
-   * <div style={{ fontSize: 60 }}>Hello Frog</div>
-   *
-   * @example
-   * "https://i.ytimg.com/vi/R3UACX5eULI/maxresdefault.jpg"
-   */
-  image: string | JSX.Element
-  /**
    * The aspect ratio of the OG Image.
    *
    * @example '1:1'
    */
   imageAspectRatio?: FrameImageAspectRatio | undefined
-  /**
-   * Image options.
-   *
-   * @see https://vercel.com/docs/functions/og-image-generation/og-image-api
-   *
-   * @example
-   * { width: 1200, height: 630 }
-   */
-  imageOptions?: ImageOptions | undefined
   /**
    * Path or URI to the OG image.
    *
@@ -129,7 +114,36 @@ export type FrameResponse = {
    * Additional meta tags for the frame.
    */
   unstable_metaTags?: { property: string; content: string }[] | undefined
-}
+} & (
+  | {
+      /**
+       * The OG Image to render for the frame. Can either be a JSX element, or URL.
+       *
+       * @example
+       * <div style={{ fontSize: 60 }}>Hello Frog</div>
+       */
+      image: JSX.Element
+      /**
+       * Image options.
+       *
+       * @see https://vercel.com/docs/functions/og-image-generation/og-image-api
+       *
+       * @example
+       * { width: 1200, height: 630 }
+       */
+      imageOptions?: Pretty<Omit<ImageOptions, 'fonts'>> | undefined
+    }
+  | {
+      /**
+       * The OG Image to render for the frame. Can either be a JSX element, or URL.
+       *
+       * @example
+       * "https://i.ytimg.com/vi/R3UACX5eULI/maxresdefault.jpg"
+       */
+      image: string
+      imageOptions?: never
+    }
+)
 
 export type FrameResponseFn = (
   response: FrameResponse,

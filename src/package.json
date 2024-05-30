@@ -1,7 +1,7 @@
 {
   "name": "@airstack/frog",
   "description": "Airstack Flavour 🐸 Framework for Farcaster Frames",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "type": "module",
   "module": "_lib/index.js",
   "types": "_lib/index.d.ts",
@@ -68,6 +68,22 @@
       "types": "./_lib/ui/index.d.ts",
       "default": "./_lib/ui/index.js"
     },
+    "./ui/icons": {
+      "types": "./_lib/ui/icons/index.d.ts",
+      "default": "./_lib/ui/icons/index.js"
+    },
+    "./ui/icons/heroicons": {
+      "types": "./_lib/ui/icons/heroicons/index.d.ts",
+      "default": "./_lib/ui/icons/heroicons/index.js"
+    },
+    "./ui/icons/lucide": {
+      "types": "./_lib/ui/icons/lucide/index.d.ts",
+      "default": "./_lib/ui/icons/lucide/index.js"
+    },
+    "./ui/icons/radix-icons": {
+      "types": "./_lib/ui/icons/radix-icons/index.d.ts",
+      "default": "./_lib/ui/icons/radix-icons/index.js"
+    },
     "./vercel": {
       "types": "./_lib/vercel/index.d.ts",
       "default": "./_lib/vercel/index.js"
@@ -83,7 +99,7 @@
     }
   },
   "dependencies": {
-    "@airstack/frames": "^1.1.8",
+    "@airstack/frames": "^1.1.9",
     "@bufbuild/protobuf": "^1.7.2",
     "@hono/node-server": "^1.8.2",
     "@hono/valibot-validator": "^0.2.2",

@@ -1,5 +1,6 @@
 import { Button, Frog } from '@airstack/frog'
 import { serveStatic } from '@airstack/frog/serve-static'
+import { heroicons, lucide, radixIcons } from '@airstack/frog/ui/icons'
 
 import {
   Box,
@@ -187,19 +188,19 @@ export const app = new Frog({
                 <Icon color="green800" name="zap" size="64" />
                 <Icon
                   color="green800"
-                  collection="lucide"
+                  collection={lucide}
                   name="zap"
                   size="64"
                 />
                 <Icon
                   color="green800"
-                  collection="heroicons"
+                  collection={heroicons}
                   name="bolt"
                   size="64"
                 />
                 <Icon
                   color="green800"
-                  collection="radix-icons"
+                  collection={radixIcons}
                   name="lightning-bolt"
                   size="64"
                 />

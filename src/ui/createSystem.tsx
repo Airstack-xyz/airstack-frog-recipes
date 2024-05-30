@@ -35,12 +35,12 @@ import { type DefaultVars, type Vars, defaultVars } from './vars.js'
 export function createSystem<vars extends Vars = DefaultVars>(
   vars?: vars | undefined,
 ) {
+  type MergedVars = Assign<DefaultVars, vars>
+
   const mergedVars = {
     ...defaultVars,
     ...vars,
-  }
-
-  type MergedVars = Assign<DefaultVars, vars>
+  } as MergedVars
 
   function createComponent<
     const component extends (...args: any[]) => JSX.Element,
@@ -149,7 +149,7 @@ export function createSystem<vars extends Vars = DefaultVars>(
      */
     Icon: <
       vars extends MergedVars,
-      collection extends Vars['icons'] = DefaultVars['icons'],
+      collection extends Vars['icons'] = MergedVars['icons'],
     >(
       props: IconProps<vars, collection>,
     ) => <Icon __context={{ vars: mergedVars }} {...props} />,

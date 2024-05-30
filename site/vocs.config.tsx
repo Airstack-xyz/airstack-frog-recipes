@@ -3,8 +3,7 @@ import { version } from '../src/package.json'
 import { getFrameMetadata } from '../src/utils/getFrameMetadata.js'
 
 export default defineConfig({
-  banner:
-    '👣 Introducing [Multi-step Cast Actions](/concepts/multi-step-cast-actions).',
+  banner: '🖼️Introducing [Image Handler](/concepts/image-handler).',
   description: 'Framework for Farcaster Frames',
   iconUrl: '/icon.png',
   async head({ path }) {
@@ -274,6 +273,10 @@ export default defineConfig({
             link: '/concepts/images-intents',
           },
           {
+            text: 'Image Handler',
+            link: '/concepts/image-handler',
+          },
+          {
             text: 'Connecting Frames (Actions)',
             link: '/concepts/actions',
           },
@@ -396,6 +399,17 @@ export default defineConfig({
             ],
           },
           {
+            text: 'Frog.image',
+            link: '/reference/frog-image',
+            items: [
+              { text: 'Context', link: '/reference/frog-image-context' },
+              {
+                text: 'Response',
+                link: '/reference/frog-image-response',
+              },
+            ],
+          },
+          {
             text: 'Frog.transaction',
             link: '/reference/frog-transaction',
             items: [
@@ -407,6 +421,15 @@ export default defineConfig({
             ],
           },
           { text: 'Frog.hono', link: '/reference/frog-hono' },
+        ],
+      },
+      {
+        text: 'Middlewares',
+        items: [
+          {
+            text: 'Neynar',
+            link: '/middlewares/neynar',
+          },
         ],
       },
       {
