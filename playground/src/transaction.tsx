@@ -3,7 +3,7 @@ import { Button, Frog } from '@airstack/frog'
 export const app = new Frog({
   apiKey: process.env.AIRSTACK_API_KEY as string,
   verify: 'silent',
-  title: 'Transaction'
+  title: 'Transaction',
 })
   .frame('/', (c) => {
     const transactionId = c.transactionId
