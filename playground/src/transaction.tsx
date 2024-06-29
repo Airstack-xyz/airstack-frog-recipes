@@ -3,6 +3,7 @@ import { Button, Frog } from '@airstack/frog'
 export const app = new Frog({
   apiKey: process.env.AIRSTACK_API_KEY as string,
   verify: 'silent',
+  title: 'Transaction'
 })
   .frame('/', (c) => {
     const transactionId = c.transactionId
@@ -63,7 +64,9 @@ export const app = new Frog({
     })
   })
   // Custom error
-  .transaction('/error', (c) => c.error({ message: 'bad transaction' }))
+  .transaction('/error', (c) =>
+    c.error({ message: `bad transaction ${Math.random()}` }),
+  )
   // Raw Transaction
   .transaction('/raw-send', (c) => {
     return c.res({

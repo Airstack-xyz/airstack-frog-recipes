@@ -16,8 +16,8 @@
     "create-frog": "node --import tsx ./create-frog/bin.ts",
     "docs:dev": "pnpm --filter site dev",
     "docs:build": "pnpm --filter site build",
-    "format": "biome format . --write",
-    "lint": "biome check .",
+    "format": "biome format --write",
+    "lint": "biome check",
     "gen:icons": "bun .scripts/gen-icons.ts",
     "gen:protobufs": "pnpm --filter protobufs generate",
     "postinstall": "pnpm build && pnpm preconstruct",
@@ -26,7 +26,7 @@
     "typecheck": "tsc --noEmit && pnpm run --r --parallel typecheck"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.5.3",
+    "@biomejs/biome": "^1.8.1",
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.1",
     "@iconify/json": "^2.2.196",
@@ -41,7 +41,7 @@
     "bun": "^1.0.28",
     "fast-glob": "^3.3.2",
     "fs-extra": "^11.2.0",
-    "hono": "^4",
+    "hono": "^4.4.4",
     "picocolors": "^1.0.0",
     "rimraf": "^5.0.5",
     "tsx": "^4.7.1",
@@ -51,7 +51,7 @@
   "packageManager": "pnpm@8.15.3",
   "pnpm": {
     "overrides": {
-      "hono": "4.1.0",
+      "hono": "4.4.4",
       "typescript": "5.3.3"
     }
   }

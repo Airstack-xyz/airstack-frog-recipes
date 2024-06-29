@@ -17,6 +17,7 @@ export const app = new Frog({
   ui: { vars },
   verify: 'silent',
   apiKey: process.env.AIRSTACK_API_KEY as string, // Replace 'YOUR_API_KEY_HERE' with your actual API key
+  title: 'Playground',
 })
   .frame('/', (c: any) => {
     const { buttonValue, inputText, status } = c

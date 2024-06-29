@@ -2,6 +2,7 @@ import { Button, Frog } from '@airstack/frog'
 
 export const app = new Frog({
   apiKey: process.env.AIRSTACK_API_KEY as string,
+  title: 'Routing'
 })
 
 app

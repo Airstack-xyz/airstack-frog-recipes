@@ -11,6 +11,8 @@ export async function parseImage(
     ui: Frog['ui'] & { direction?: Direction | undefined }
   },
 ): Promise<Child> {
+  if (!node_) return node_
+
   const { assetsUrl, ui } = options
 
   if (typeof node_ !== 'object') return node_
@@ -39,6 +41,7 @@ export async function parseImage(
       },
       children: node.children,
     })
+    if (!node) return node
     node.props.__context = undefined
     node = (await parseImage(node, {
       assetsUrl,

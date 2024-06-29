@@ -1,6 +1,6 @@
 import { init } from '@airstack/frames'
 import { detect } from 'detect-browser'
-import { Hono } from 'hono'
+import { type Context, Hono } from 'hono'
 import { ImageResponse } from 'hono-og'
 import { inspectRoutes } from 'hono/dev'
 import type { HonoOptions } from 'hono/hono-base'
@@ -13,6 +13,8 @@ import lz from 'lz-string'
 import { default as p } from 'path-browserify'
 import { config } from './config.js'
 import { airstack } from './hubs/airstack.js'
+
+import type { CastActionOptions } from './types/castAction.js'
 import type { Env } from './types/env.js'
 import type {
   FrameImageAspectRatio,
@@ -20,13 +22,14 @@ import type {
   ImageOptions,
 } from './types/frame.js'
 import type { Hub } from './types/hub.js'
-import type { Octicon } from './types/octicon.js'
 import type {
+  BlankInput,
   CastActionHandler,
   FrameHandler,
   H,
   HandlerInterface,
   ImageHandler,
+  Input,
   MiddlewareHandlerInterface,
   TransactionHandler,
 } from './types/routes.js'
@@ -56,7 +59,7 @@ export type FrogConstructorParameters<
   env extends Env = Env,
   basePath extends string = '/',
   _state = env['State'],
-> = Pick<FrameResponse, 'browserLocation'> & {
+> = Pick<FrameResponse, 'browserLocation'> & Required<Pick<FrameResponse, 'title'>> & {
   /**
    * Airstack API key. Get your Airstack API key at https://app.airstack.xyz
    */
@@ -178,51 +181,34 @@ export type FrogConstructorParameters<
    */
   verify?: boolean | 'silent' | undefined
 
-  /**
-   * Additional meta tags for the instance.
-   */
-  unstable_metaTags?: { property: string; content: string }[] | undefined
-}
+    /**
+     * Additional meta tags for the instance.
+     */
+    unstable_metaTags?: { property: string; content: string }[] | undefined
+  }
 
-export type RouteOptions<method extends string = string> = Pick<
-  FrogConstructorParameters,
-  'verify'
-> &
+export type RouteOptions<
+  method extends string = string,
+  E extends Env = any,
+  P extends string = any,
+  I extends Input = BlankInput,
+> = Pick<FrogConstructorParameters, 'verify'> &
   (method extends 'frame' | 'image'
     ? {
         fonts?: ImageOptions['fonts'] | (() => Promise<ImageOptions['fonts']>)
       }
     : method extends 'castAction'
-      ? {
-          /**
-           * An action name up to 30 characters.
-           *
-           * @example `'My action.'`
-           */
-          name: string
-          /**
-           * An icon ID.
-           *
-           * @see https://warpcast.notion.site/Spec-Farcaster-Actions-84d5a85d479a43139ea883f6823d8caa
-           * @example `'log'`
-           */
-          icon: Octicon
-          /**
-           * A short description up to 80 characters.
-           *
-           * @example `'My awesome action description.'`
-           */
-          description?: string
-          /**
-           * Optional external link to an "about" page.
-           * You should only include this if you can't fully describe your
-           * action using the `description` field.
-           * Must be http or https protocol.
-           *
-           * @example `'My awesome action description.'`
-           */
-          aboutUrl?: string
-        }
+      ?
+          | CastActionOptions
+          | {
+              /**
+               * Custom handler for Cast Action `GET` response.
+               * One can use that if something needs to be derived from the `Context`.
+               */
+              handler: (
+                c: Context<E, P, I>,
+              ) => Promise<CastActionOptions> | CastActionOptions
+            }
       : {})
 
 /**
@@ -293,6 +279,8 @@ export class FrogBase<
   post: Hono<env, schema, basePath>['post']
   /** Key used to sign secret data. */
   secret: FrogConstructorParameters['secret'] | undefined
+  /** Title of the frame to be set at `og:title` **/
+  title: FrogConstructorParameters['title']
   /** FrogUI configuration. */
   ui: { vars: Vars | undefined } | undefined
   /** Whether or not frames should be verified. */
@@ -306,6 +294,7 @@ export class FrogBase<
   constructor(
     parameters: FrogConstructorParameters<env, basePath, _state> = {
       apiKey: '',
+      title: ""
     },
   ) {
     const {
@@ -323,6 +312,7 @@ export class FrogBase<
       initialState,
       origin,
       secret,
+      title,
       ui,
       unstable_metaTags,
       verify,
@@ -345,6 +335,7 @@ export class FrogBase<
     if (unstable_metaTags) this.metaTags = unstable_metaTags
     if (origin) this.origin = origin
     if (secret) this.secret = secret
+    this.title = title
     if (ui) this.ui = ui
     if (typeof verify !== 'undefined') this.verify = verify
 
@@ -381,22 +372,47 @@ export class FrogBase<
       'castAction'
     >(...parameters)
 
-    const { verify = this.verify, ...installParameters } = options
+    const { verify = this.verify } = options
 
-    // Cast Action Route (implements GET and POST).
-    this.hono.use(parseHonoPath(path), ...middlewares, async (c) => {
-      const url = getRequestUrl(c.req)
-      const origin = this.origin ?? url.origin
-      const baseUrl = origin + parsePath(this.basePath)
+    // Cast Action Route (implements GET).
+    if ('handler' in options) {
+      this.hono.get(parseHonoPath(path), ...middlewares, async (c) => {
+        const url = getRequestUrl(c.req)
 
-      if (c.req.method === 'GET')
+        const { aboutUrl, name, description, icon } = await options.handler(c)
         return c.json({
-          ...installParameters,
-          postUrl: baseUrl + parsePath(path),
+          aboutUrl,
           action: {
             type: 'post',
           },
+          name,
+          description,
+          icon,
+          postUrl: url,
         })
+      })
+    } else {
+      const { aboutUrl, name, description, icon } = options
+
+      this.hono.get(parseHonoPath(path), ...middlewares, async (c) => {
+        const url = getRequestUrl(c.req)
+        return c.json({
+          aboutUrl,
+          action: {
+            type: 'post',
+          },
+          name,
+          description,
+          icon,
+          postUrl: url,
+        })
+      })
+    }
+    // Cast Action Route (implements POST).
+    this.hono.post(parseHonoPath(path), ...middlewares, async (c) => {
+      const url = getRequestUrl(c.req)
+      const origin = this.origin ?? url.origin
+      const baseUrl = origin + parsePath(this.basePath)
 
       const { context } = getCastActionContext<env, string>({
         context: await requestBodyToContext(c, {
@@ -521,7 +537,7 @@ export class FrogBase<
         imageOptions: imageOptions_ = this.imageOptions,
         intents,
         ogImage,
-        title = 'Frog Frame',
+        title = this.title,
       } = response.data
 
       const buttonValues = getButtonValues(
@@ -631,7 +647,22 @@ export class FrogBase<
         const isHandlerPresentOnImagePath = (() => {
           const routes = inspectRoutes(this.hono)
           const matchesWithoutParamsStash = this.hono.router
-            .match('GET', image)
+            .match(
+              'GET',
+              // `this.initialBasePath` and `this.basePath` are equal only when this handler is triggered at
+              // the top `Frog` instance.
+              //
+              // However, such are not equal when an instance of `Frog` is routed to another one via `.route`,
+              // and since we not expect one to set `basePath` to the instance which is being routed to, we can
+              // safely assume it's only set at the top level, as doing otherwise is irrational.
+              //
+              // Since `this.basePath` is set at the top instance, we have to account for that while looking for a match.
+              //
+              // @ts-ignore - accessing a private field
+              this.initialBasePath === this.basePath
+                ? this.basePath + parsePath(image)
+                : parsePath(image),
+            )
             .filter(
               (routeOrParams) => typeof routeOrParams[0] !== 'string',
             ) as unknown as (
@@ -872,6 +903,10 @@ export class FrogBase<
       )
 
     this.hono.get(path, ...middlewares, async (c) => {
+      const url = getRequestUrl(c.req)
+      const origin = this.origin ?? url.origin
+      const assetsUrl = origin + parsePath(this.assetsPath)
+
       const { context } = getImageContext<env, string>({
         context: c,
       })
@@ -902,14 +937,41 @@ export class FrogBase<
         image,
         imageOptions = defaultImageOptions,
       } = response.data
-      return new ImageResponse(image, {
-        width: 1200,
-        height: 630,
-        ...imageOptions,
-        format: imageOptions?.format ?? 'png',
-        fonts: await parseFonts(fonts),
-        headers: imageOptions?.headers ?? headers,
-      })
+      return new ImageResponse(
+        (await parseImage(
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: '100%',
+              width: '100%',
+            }}
+          >
+            {await image}
+          </div>,
+          {
+            assetsUrl,
+            ui: {
+              ...this.ui,
+              vars: {
+                ...this.ui?.vars,
+                frame: {
+                  height: imageOptions?.height!,
+                  width: imageOptions?.width!,
+                },
+              },
+            },
+          },
+        )) as any,
+        {
+          width: 1200,
+          height: 630,
+          ...imageOptions,
+          format: imageOptions?.format ?? 'png',
+          fonts: await parseFonts(fonts),
+          headers: imageOptions?.headers ?? headers,
+        },
+      )
     })
 
     return this

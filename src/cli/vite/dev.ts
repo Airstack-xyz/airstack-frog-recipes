@@ -1,8 +1,7 @@
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { getRequestListener } from '@hono/node-server'
 import { ImageResponse } from 'hono-og'
-import type { Connect, ViteDevServer } from 'vite'
-import type { Plugin as VitePlugin } from 'vite'
+import type { Connect, Plugin as VitePlugin, ViteDevServer } from 'vite'
 
 export type DevServerOptions = {
   entry?: string

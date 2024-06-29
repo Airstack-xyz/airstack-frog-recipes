@@ -12,7 +12,7 @@ const echoMiddleware: MiddlewareHandler<{
   await next()
 }
 
-export const app = new Frog().use(echoMiddleware).frame('/', (c: any) => {
+export const app = new Frog({ apiKey: process.env.AIRSTACK_API_KEY as string, title: 'Middleware' }).use(echoMiddleware).frame('/', (c: any) => {
   return c.res({
     image: (
       <div style={{ color: 'white', display: 'flex', fontSize: 60 }}>

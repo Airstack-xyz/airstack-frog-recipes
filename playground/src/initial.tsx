@@ -4,6 +4,7 @@ import { Heading, VStack, vars } from './ui.js'
 export const app = new Frog({
   apiKey: process.env.AIRSTACK_API_KEY as string,
   ui: { vars },
+  title: 'Initial',
 })
   .frame('/', (c) => {
     return c.res({
