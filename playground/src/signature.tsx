@@ -1,6 +1,10 @@
 import { Button, Frog } from '@airstack/frog'
 
-export const app = new Frog({ verify: 'silent', title: 'Signature', apiKey: process.env.AIRSTACK_API_KEY as string })
+export const app = new Frog({
+  verify: 'silent',
+  title: 'Signature',
+  apiKey: process.env.AIRSTACK_API_KEY as string,
+})
   .frame('/', (c: any) => {
     const transactionId = c.transactionId
     return c.res({
