@@ -1,7 +1,7 @@
-import { Button, Frog } from 'frog'
+import { Button, Frog } from '@airstack/frog'
 
-export const app = new Frog({ verify: 'silent', title: 'Signature' })
-  .frame('/', (c) => {
+export const app = new Frog({ verify: 'silent', title: 'Signature', apiKey: process.env.AIRSTACK_API_KEY as string })
+  .frame('/', (c: any) => {
     const transactionId = c.transactionId
     return c.res({
       image: (
@@ -17,7 +17,7 @@ export const app = new Frog({ verify: 'silent', title: 'Signature' })
     })
   })
   // Sign Typed Data
-  .signature('/sign', (c) =>
+  .signature('/sign', (c: any) =>
     c.signTypedData({
       chainId: 'eip155:84532',
       domain: {
