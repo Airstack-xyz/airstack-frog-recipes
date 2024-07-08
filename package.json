@@ -5,7 +5,7 @@
     "dev:cli": "node --import tsx src/cli/index.ts",
     "dev:create-frog": "bun create-frog/bin.ts",
     "dev:ui": "pnpm --filter ui build --watch",
-    "build": "pnpm clean && pnpm gen:icons && pnpm gen:protobufs && pnpm build:frog && pnpm build:ui && pnpm build:create-frog && bun .scripts/postbuild.ts",
+    "build": "pnpm gen:protobufs && pnpm build:frog && pnpm build:ui && pnpm build:create-frog && bun .scripts/postbuild.ts",
     "build:frog": "tsc --project ./tsconfig.build.json",
     "build:create-frog": "rimraf create-frog/_lib && tsc -p create-frog/tsconfig.build.json",
     "build:ui": "pnpm --filter ui build",
